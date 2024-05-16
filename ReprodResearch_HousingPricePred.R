@@ -3,6 +3,8 @@ library(dplyr)
 library(ecce) #for translation
 library(geosphere)  #for distance calculation
 library(ggplot2)
+library(corrplot)
+library(reshape2)
 
 #set directory to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -61,7 +63,7 @@ housing_prices_data_clean <- housing_prices_data_clean[ , !(names(housing_prices
 #housing_prices_data_clean$floorTypeENG <- translate(housing_prices_data_clean$floorType, from = "auto", to = "auto")
 #we need API key so we wont translate the floor types
 
-# Floor types translation
+# Floor types translation - is like a group of floorNum then it can be removed
 # 高 - High
 # 未知 - Unknown
 # 顶  - Top
@@ -107,6 +109,9 @@ housing_prices_data_clean$fiveYearsProperty <- as.factor(housing_prices_data_cle
 housing_prices_data_clean$subway <- as.factor(housing_prices_data_clean$subway)
 housing_prices_data_clean$district <- as.factor(housing_prices_data_clean$district)
 housing_prices_data_clean$elevator <- as.factor(housing_prices_data_clean$elevator)
+
+#char to Date
+housing_prices_data_clean$tradeTime <- as.Date(housing_prices_data_clean$tradeTime)
 
 table(housing_prices_data_clean$district)
 str(housing_prices_data_clean)
@@ -212,3 +217,56 @@ cut_price <- IQRcutData(housing_prices_data_clean$price)
 housing_prices_data_clean$price <- cut_price
 #######################################################################
 
+save(housing_prices_data_clean, file="housing_prices_data_clean.Rdata")
+
+##### Data Analysis
+
+str(housing_prices_data_clean)
+
+
+#Correlation matrix for numerics
+corrData <- housing_prices_data_clean
+drop_colsCorr2 <- c("tradeTime","Cid","Lng","Lat","floorType")
+drop_colsCorr <- c("Cid","Lng","Lat","tradeTime","buildingType","renovationCondition","buildingStructure","floorType","elevator","fiveYearsProperty","subway","district")
+corrData <- corrData[ , !(names(corrData) %in% drop_colsCorr)]
+
+str(corrData)
+
+res <- cor(corrData)
+corrplot(res,method="number")
+
+col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
+corrplot(res, method="color", col=col(200),  
+         type="upper", order="hclust", 
+         addCoef.col = "black", # Add coefficient of correlation
+         tl.col="black", tl.srt=45, #Text label color and rotation
+         # Combine with significance
+         sig.level = 0.01, insig = "blank", 
+         # hide correlation coefficient on the principal diagonal
+         diag=FALSE , number.cex = 0.4, tl.cex = 0.5
+)
+
+
+
+
+
+
+
+#One-hot encoding - correlation matrix of all vars
+
+housing_prices_data_clean <- housing_prices_data_clean[ , !(names(housing_prices_data_clean) %in% drop_colsCorr2)]
+# Convert factor variables to dummy variables
+dummy_vars <- lapply(housing_prices_data_clean[, sapply(housing_prices_data_clean, is.factor)], function(x) model.matrix(~ x - 1, data = housing_prices_data_clean))
+
+# Combine dummy variables with numeric variables
+housing_prices_data_clean_onehot <- cbind(housing_prices_data_clean[, !sapply(housing_prices_data_clean, is.factor)], do.call(cbind, dummy_vars))
+# Calculate correlation matrix
+correlation_matrix <- cor(housing_prices_data_clean_onehot)
+
+# Visualize correlation matrix as heatmap
+heatmap(correlation_matrix, symm = TRUE)
+ggplot(data = melt(correlation_matrix), aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, name="Correlation") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(title = "Correlation Plot")
