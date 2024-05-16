@@ -103,12 +103,15 @@ housing_prices_data_clean$buildingStructure <- ifelse(housing_prices_data_clean$
 ##Dealing with outliers
 housing_prices_data_clean$buildingStructure <- as.factor(ifelse(housing_prices_data_clean$buildingStructure=="Steel","Steel-concrete composite",ifelse(housing_prices_data_clean$buildingStructure=="Brick and wood","Mixed",ifelse(housing_prices_data_clean$buildingStructure=="Unknow","Mixed",housing_prices_data_clean$buildingStructure))))
 
-housing_prices_data_clean$floorType <- as.factor(housing_prices_data_clean$floorType)
+#housing_prices_data_clean$floorType <- as.factor(housing_prices_data_clean$floorType)
+
+housing_prices_data_clean$elevator <- ifelse(housing_prices_data_clean$elevator==1,"Elevator","noElevator")
 housing_prices_data_clean$elevator <- as.factor(housing_prices_data_clean$elevator)
+housing_prices_data_clean$fiveYearsProperty <- ifelse(housing_prices_data_clean$fiveYearsProperty==1,"isFiveYProp","noFiveYProp")
 housing_prices_data_clean$fiveYearsProperty <- as.factor(housing_prices_data_clean$fiveYearsProperty)
+housing_prices_data_clean$subway <- ifelse(housing_prices_data_clean$subway==1,"Subway","NoSubway")
 housing_prices_data_clean$subway <- as.factor(housing_prices_data_clean$subway)
 housing_prices_data_clean$district <- as.factor(housing_prices_data_clean$district)
-housing_prices_data_clean$elevator <- as.factor(housing_prices_data_clean$elevator)
 
 #char to Date
 housing_prices_data_clean$tradeTime <- as.Date(housing_prices_data_clean$tradeTime)
@@ -270,3 +273,36 @@ ggplot(data = melt(correlation_matrix), aes(x = Var1, y = Var2, fill = value)) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, name="Correlation") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   labs(title = "Correlation Plot")
+
+
+### Add trade time
+load("housing_prices_data_clean.RData")
+#restoring tradeTime
+housing_prices_data_clean_onehot$tradeTime <- housing_prices_data_clean$tradeTime
+
+## Data for modeling
+
+str(housing_prices_data_clean_onehot)
+
+# Custom function to standardize numeric and integer columns
+standardize_cols <- function(x) {
+  if (is.numeric(x) || is.integer(x)) {
+    return((x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE))
+  } else {
+    return(x)
+  }
+}
+
+# Standardize numeric and integer columns
+housing_prices_data_clean_stand <- housing_prices_data_clean %>%
+  mutate(across(where(is.numeric) | where(is.integer), standardize_cols))
+#one-hot encoding once again
+
+# Convert factor variables to dummy variables
+dummy_vars <- lapply(housing_prices_data_clean_stand[, sapply(housing_prices_data_clean_stand, is.factor)], function(x) model.matrix(~ x - 1, data = housing_prices_data_clean_stand))
+
+# Combine dummy variables with numeric variables
+housing_prices_data_clean_stand_onehot <- cbind(housing_prices_data_clean_stand[, !sapply(housing_prices_data_clean_stand, is.factor)], do.call(cbind, dummy_vars))
+
+save(housing_prices_data_clean_stand_onehot, file="housing_prices_data_clean_stand_onehot.Rdata")
+
