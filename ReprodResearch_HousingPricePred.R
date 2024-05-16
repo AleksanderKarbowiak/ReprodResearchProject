@@ -4,6 +4,9 @@ library(ecce) #for translation
 library(geosphere)  #for distance calculation
 library(ggplot2)
 
+#set directory to source file location
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 #read csv as dataframe
 housing_prices_data <- as.data.frame(read.csv("new.csv",fileEncoding="gbk", header = TRUE)) #fileEncoding='gbk' is chinese signs encoding
 
@@ -111,6 +114,8 @@ str(housing_prices_data_clean)
 ##New feature - average size of a room
 housing_prices_data_clean$avgRoomSize <- housing_prices_data_clean$square/(housing_prices_data_clean$livingRoom + housing_prices_data_clean$drawingRoom + housing_prices_data_clean$kitchen + housing_prices_data_clean$bathRoom)
 
+housing_prices_data_clean$totalPrice <- housing_prices_data_clean$totalPrice * 10000 #real scale
+
 #########
 ##INFO:
 ## totalPrice is price (average price by sqrt * square) * 10 000
@@ -162,43 +167,48 @@ ggplot(housing_prices_data_clean, aes(x = price)) +
                  colour = 1, fill = "white") +
   geom_density()                   
 
+boxplot(housing_prices_data_clean$totalPrice)
 
 #Looking for outliers in numerical variables using IQR
-
-
+q<-NULL
+iqr<-NULL
+upper<-NULL
+lower<-NULL
 IQRcutData <- function(data, lower_quantile = 0.25, upper_quantile = 0.75)
 {
-  q <- quantile(data, probs=c(lower_quantile, upper_quantile),na.rm=TRUE)
-  iqr <- q[2]-q[1]
-  upper <- q[2] + 1.5*iqr
-  lower <-q[1] - 1.5*iqr
+  q <<- quantile(data, probs=c(lower_quantile, upper_quantile),na.rm=TRUE)
+  iqr <<- q[2]-q[1]
+  upper <<- q[2] + 1.5*iqr
+  lower <<-q[1] - 1.5*iqr
   #outliers_totalPrice <- data > upper | data < lower
   
   data_cut <- data
   data_cut[data < lower] <-lower
-  data_cut[data > upper] <upper
+  data_cut[data > upper] <- upper
   
   return(data_cut)
   
 }
 
-testData <- housing_prices_data_clean
 
+
+########################################################## Outliers IQR
 cut_totalPrice <-IQRcutData(housing_prices_data_clean$totalPrice)
-testData$totalPrice <- cut_totalPrice
-IQRcutData(housing_prices_data_clean$followers)
+housing_prices_data_clean$totalPrice <- cut_totalPrice
 
+cut_followers <- IQRcutData(housing_prices_data_clean$followers)
+housing_prices_data_clean$followers <- cut_followers
 
-ggplot(housing_prices_data_clean, aes(x = totalPrice)) + 
-  geom_histogram(aes(y = ..density..),
-                 colour = 1, fill = "white") +
-  geom_density()
+cut_floorNum <- IQRcutData(housing_prices_data_clean$floorNum)
+housing_prices_data_clean$floorNum <- cut_floorNum
 
+cut_communityAverage <- IQRcutData(housing_prices_data_clean$communityAverage)
+housing_prices_data_clean$communityAverage <- cut_communityAverage
 
-boxplot(housing_prices_data_clean$totalPrice)
+cut_square <- IQRcutData(housing_prices_data_clean$square)
+housing_prices_data_clean$square <- cut_square
 
+cut_price <- IQRcutData(housing_prices_data_clean$price)
+housing_prices_data_clean$price <- cut_price
+#######################################################################
 
-ggplot(testData, aes(x = totalPrice)) + 
-  geom_histogram(aes(y = ..density..),
-                 colour = 1, fill = "white") +
-  geom_density()
