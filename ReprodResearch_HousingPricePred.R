@@ -2,6 +2,10 @@
 library(dplyr)
 library(ecce) #for translation
 library(geosphere)  #for distance calculation
+library(ggplot2)
+
+#set directory to source file location
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 #read csv as dataframe
 housing_prices_data <- as.data.frame(read.csv("new.csv",fileEncoding="gbk", header = TRUE)) #fileEncoding='gbk' is chinese signs encoding
@@ -84,9 +88,19 @@ housing_prices_data_clean$age <- ifelse(housing_prices_data_clean$constructionTi
 housing_prices_data_clean <- housing_prices_data_clean[ , !(names(housing_prices_data_clean) %in% "constructionTime")]
 
 ##changing numeric to categories factors
-housing_prices_data_clean$buildingType <- as.factor(ifelse(housing_prices_data_clean$buildingType==1,"Tower",ifelse(housing_prices_data_clean$buildingType==2,"Bungalow",ifelse(housing_prices_data_clean$buildingType==3,"Plate and Tower","Plate"))))
-housing_prices_data_clean$renovationCondition <- as.factor(ifelse(housing_prices_data_clean$renovationCondition==1,"Other",ifelse(housing_prices_data_clean$renovationCondition==2,"Rough",ifelse(housing_prices_data_clean$renovationCondition==3,"Simplicity","Hardcover"))))
-housing_prices_data_clean$buildingStructure <- as.factor(ifelse(housing_prices_data_clean$buildingStructure==1,"Unknow",ifelse(housing_prices_data_clean$buildingStructure==2,"Mixed",ifelse(housing_prices_data_clean$buildingStructure==3,"Brick and wood",ifelse(housing_prices_data_clean$buildingStructure==4,"Brick and concrete",ifelse(housing_prices_data_clean$buildingStructure==5,"Steel","Steel-concrete composite"))))))
+housing_prices_data_clean$buildingType <- ifelse(housing_prices_data_clean$buildingType==1,"Tower",ifelse(housing_prices_data_clean$buildingType==2,"Bungalow",ifelse(housing_prices_data_clean$buildingType==3,"Plate and Tower","Plate")))
+#Bungalow building Types will be deleted from dataset since they are outliers and bungalow is completely different than other types
+housing_prices_data_clean <- housing_prices_data_clean[housing_prices_data_clean$buildingType != "Bungalow", ]
+housing_prices_data_clean$buildingType <- as.factor(housing_prices_data_clean$buildingType)
+
+housing_prices_data_clean$renovationCondition <- ifelse(housing_prices_data_clean$renovationCondition==1,"Other",ifelse(housing_prices_data_clean$renovationCondition==2,"Rough",ifelse(housing_prices_data_clean$renovationCondition==3,"Simplicity","Hardcover")))
+# Rough renovation condition will be assign to Hardcover
+housing_prices_data_clean$renovationCondition <- as.factor(ifelse(housing_prices_data_clean$renovationCondition=="Rough","Hardcover",housing_prices_data_clean$renovationCondition))
+  
+housing_prices_data_clean$buildingStructure <- ifelse(housing_prices_data_clean$buildingStructure==1,"Unknow",ifelse(housing_prices_data_clean$buildingStructure==2,"Mixed",ifelse(housing_prices_data_clean$buildingStructure==3,"Brick and wood",ifelse(housing_prices_data_clean$buildingStructure==4,"Brick and concrete",ifelse(housing_prices_data_clean$buildingStructure==5,"Steel","Steel-concrete composite")))))
+##Dealing with outliers
+housing_prices_data_clean$buildingStructure <- as.factor(ifelse(housing_prices_data_clean$buildingStructure=="Steel","Steel-concrete composite",ifelse(housing_prices_data_clean$buildingStructure=="Brick and wood","Mixed",ifelse(housing_prices_data_clean$buildingStructure=="Unknow","Mixed",housing_prices_data_clean$buildingStructure))))
+
 housing_prices_data_clean$floorType <- as.factor(housing_prices_data_clean$floorType)
 housing_prices_data_clean$elevator <- as.factor(housing_prices_data_clean$elevator)
 housing_prices_data_clean$fiveYearsProperty <- as.factor(housing_prices_data_clean$fiveYearsProperty)
@@ -100,12 +114,101 @@ str(housing_prices_data_clean)
 ##New feature - average size of a room
 housing_prices_data_clean$avgRoomSize <- housing_prices_data_clean$square/(housing_prices_data_clean$livingRoom + housing_prices_data_clean$drawingRoom + housing_prices_data_clean$kitchen + housing_prices_data_clean$bathRoom)
 
+housing_prices_data_clean$totalPrice <- housing_prices_data_clean$totalPrice * 10000 #real scale
+
 #########
 ##INFO:
 ## totalPrice is price (average price by sqrt * square) * 10 000
 ##Currency is yuan
 ########
 
+#checking factors counts
+lapply(housing_prices_data_clean[sapply(housing_prices_data_clean,is.factor)],table)
+##
+#
+# $BuildingType = "Bungalow" is an outlier.
+# $renovationCondition = "Rough" is an outlier
+# $BuildingStructure = "Brick and wood", "Steel" and "Unknown" are outliers.
+#
+##
+
+##Dealing with outliers
+#housing_prices_data_clean$buildingStructure <- ifelse(housing_prices_data_clean$buildingStructure=="Steel","Steel-concrete composite",ifelse(housing_prices_data_clean$buildingStructure=="Brick and wood","Mixed",ifelse(housing_prices_data_clean$buildingStructure=="Unknow","Mixed",housing_prices_data_clean$buildingStructure)))
 
 
-                                                 
+#density of totalPrice
+ggplot(housing_prices_data_clean, aes(x = totalPrice)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "white") +
+  geom_density()
+
+ggplot(housing_prices_data_clean, aes(x = followers)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "white") +
+  geom_density()
+
+ggplot(housing_prices_data_clean, aes(x = floorNum)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "white") +
+  geom_density()
+
+ggplot(housing_prices_data_clean, aes(x = communityAverage)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "white") +
+  geom_density()
+
+ggplot(housing_prices_data_clean, aes(x = square)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "white") +
+  geom_density()
+               
+ggplot(housing_prices_data_clean, aes(x = price)) + 
+  geom_histogram(aes(y = ..density..),
+                 colour = 1, fill = "white") +
+  geom_density()                   
+
+boxplot(housing_prices_data_clean$totalPrice)
+
+#Looking for outliers in numerical variables using IQR
+q<-NULL
+iqr<-NULL
+upper<-NULL
+lower<-NULL
+IQRcutData <- function(data, lower_quantile = 0.25, upper_quantile = 0.75)
+{
+  q <<- quantile(data, probs=c(lower_quantile, upper_quantile),na.rm=TRUE)
+  iqr <<- q[2]-q[1]
+  upper <<- q[2] + 1.5*iqr
+  lower <<-q[1] - 1.5*iqr
+  #outliers_totalPrice <- data > upper | data < lower
+  
+  data_cut <- data
+  data_cut[data < lower] <-lower
+  data_cut[data > upper] <- upper
+  
+  return(data_cut)
+  
+}
+
+
+
+########################################################## Outliers IQR
+cut_totalPrice <-IQRcutData(housing_prices_data_clean$totalPrice)
+housing_prices_data_clean$totalPrice <- cut_totalPrice
+
+cut_followers <- IQRcutData(housing_prices_data_clean$followers)
+housing_prices_data_clean$followers <- cut_followers
+
+cut_floorNum <- IQRcutData(housing_prices_data_clean$floorNum)
+housing_prices_data_clean$floorNum <- cut_floorNum
+
+cut_communityAverage <- IQRcutData(housing_prices_data_clean$communityAverage)
+housing_prices_data_clean$communityAverage <- cut_communityAverage
+
+cut_square <- IQRcutData(housing_prices_data_clean$square)
+housing_prices_data_clean$square <- cut_square
+
+cut_price <- IQRcutData(housing_prices_data_clean$price)
+housing_prices_data_clean$price <- cut_price
+#######################################################################
+
