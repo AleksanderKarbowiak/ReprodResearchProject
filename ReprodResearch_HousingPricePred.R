@@ -5,6 +5,8 @@ library(geosphere)  #for distance calculation
 library(ggplot2)
 library(corrplot)
 library(reshape2)
+library(caret)
+library(randomForest)
 
 #set directory to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -13,8 +15,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 housing_prices_data <- as.data.frame(read.csv("new.csv",fileEncoding="gbk", header = TRUE)) #fileEncoding='gbk' is chinese signs encoding
 
 class(housing_prices_data)
-
-
+head(housing_prices_data)
 ########### Data cleaning #################
 
 #drop unnecessary columns
@@ -38,7 +39,7 @@ obs_with_nulls <- housing_prices_data[!complete.cases(housing_prices_data),]
 # check summary of obs_with_nulls if they differs from whole set summary
 nullRows_summary <- as.data.frame(summary(obs_with_nulls)) %>% filter(!is.na(Freq))
 
-compare_summaries <- cbind(fulldata_summary, nullRows_summary)
+#compare_summaries <- cbind(fulldata_summary, nullRows_summary)
 
 #Distributions of full dataset and null-rows-dataset are similar. Also there is only 2403 obs of rows with null values. 
 #Then we can delete rows with NULLs.
@@ -70,6 +71,10 @@ housing_prices_data_clean <- housing_prices_data_clean[ , !(names(housing_prices
 # 低 - Low
 # 底 - Bottom
 # 中 - Medium
+
+# drop floor type and cid
+columns_to_drop <- c("Cid","floorType")
+housing_prices_data_clean <- housing_prices_data_clean[ , !(names(housing_prices_data_clean) %in% columns_to_drop)]
 
 #Calculation of distance between home and Beijing city center (Forbidden City coordinates in our case)
 BeijingCenterLat <- 39.91690639140218
@@ -123,6 +128,8 @@ str(housing_prices_data_clean)
 housing_prices_data_clean$avgRoomSize <- housing_prices_data_clean$square/(housing_prices_data_clean$livingRoom + housing_prices_data_clean$drawingRoom + housing_prices_data_clean$kitchen + housing_prices_data_clean$bathRoom)
 
 housing_prices_data_clean$totalPrice <- housing_prices_data_clean$totalPrice * 10000 #real scale
+
+
 
 #########
 ##INFO:
@@ -224,8 +231,6 @@ save(housing_prices_data_clean, file="housing_prices_data_clean.Rdata")
 
 ##### Data Analysis
 
-str(housing_prices_data_clean)
-
 
 #Correlation matrix for numerics
 corrData <- housing_prices_data_clean
@@ -250,59 +255,193 @@ corrplot(res, method="color", col=col(200),
 )
 
 
+#################
+# Anova test for factor variables 
+data_factor_vars <- 
+  sapply(housing_prices_data_clean, is.factor) %>% 
+  which() %>% 
+  names()
 
+data_F_anova <- function(factor_var) {
+  anova_ <- aov(housing_prices_data_clean$totalPrice ~ 
+                  housing_prices_data_clean[[factor_var]]) 
+  
+  return(summary(anova_))
+}
 
+sapply(data_factor_vars,
+       data_F_anova) -> data_anova_all_categorical
 
+data_anova_all_categorical
 
+#################
 
 #One-hot encoding - correlation matrix of all vars
 
-housing_prices_data_clean <- housing_prices_data_clean[ , !(names(housing_prices_data_clean) %in% drop_colsCorr2)]
+#housing_prices_data_clean <- housing_prices_data_clean[ , !(names(housing_prices_data_clean) %in% drop_colsCorr2)]
 # Convert factor variables to dummy variables
-dummy_vars <- lapply(housing_prices_data_clean[, sapply(housing_prices_data_clean, is.factor)], function(x) model.matrix(~ x - 1, data = housing_prices_data_clean))
+#dummy_vars <- lapply(housing_prices_data_clean[, sapply(housing_prices_data_clean, is.factor)], function(x) model.matrix(~ x - 1, data = housing_prices_data_clean))
 
 # Combine dummy variables with numeric variables
-housing_prices_data_clean_onehot <- cbind(housing_prices_data_clean[, !sapply(housing_prices_data_clean, is.factor)], do.call(cbind, dummy_vars))
+#housing_prices_data_clean_onehot <- cbind(housing_prices_data_clean[, !sapply(housing_prices_data_clean, is.factor)], do.call(cbind, dummy_vars))
 # Calculate correlation matrix
-correlation_matrix <- cor(housing_prices_data_clean_onehot)
+#correlation_matrix <- cor(housing_prices_data_clean_onehot)
 
 # Visualize correlation matrix as heatmap
-heatmap(correlation_matrix, symm = TRUE)
-ggplot(data = melt(correlation_matrix), aes(x = Var1, y = Var2, fill = value)) +
-  geom_tile() +
-  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, name="Correlation") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  labs(title = "Correlation Plot")
+#heatmap(correlation_matrix, symm = TRUE)
+#ggplot(data = melt(correlation_matrix), aes(x = Var1, y = Var2, fill = value)) +
+#  geom_tile() +
+#  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, name="Correlation") +
+#  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+#  labs(title = "Correlation Plot")
 
 
 ### Add trade time
-load("housing_prices_data_clean.RData")
+#load("housing_prices_data_clean.RData")
 #restoring tradeTime
-housing_prices_data_clean_onehot$tradeTime <- housing_prices_data_clean$tradeTime
+#housing_prices_data_clean_onehot$tradeTime <- housing_prices_data_clean$tradeTime
 
 ## Data for modeling
 
-str(housing_prices_data_clean_onehot)
+#str(housing_prices_data_clean_onehot)
 
 # Custom function to standardize numeric and integer columns
-standardize_cols <- function(x) {
-  if (is.numeric(x) || is.integer(x)) {
-    return((x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE))
-  } else {
-    return(x)
-  }
-}
+#standardize_cols <- function(x) {
+#  if (is.numeric(x) || is.integer(x)) {
+#    return((x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE))
+#  } else {
+#    return(x)
+#  }
+#}
 
 # Standardize numeric and integer columns
-housing_prices_data_clean_stand <- housing_prices_data_clean %>%
-  mutate(across(where(is.numeric) | where(is.integer), standardize_cols))
+#housing_prices_data_clean_stand <- housing_prices_data_clean %>%
+#  mutate(across(where(is.numeric) | where(is.integer), standardize_cols))
 #one-hot encoding once again
 
 # Convert factor variables to dummy variables
-dummy_vars <- lapply(housing_prices_data_clean_stand[, sapply(housing_prices_data_clean_stand, is.factor)], function(x) model.matrix(~ x - 1, data = housing_prices_data_clean_stand))
+#dummy_vars <- lapply(housing_prices_data_clean_stand[, sapply(housing_prices_data_clean_stand, is.factor)], function(x) model.matrix(~ x - 1, data = housing_prices_data_clean_stand))
 
 # Combine dummy variables with numeric variables
-housing_prices_data_clean_stand_onehot <- cbind(housing_prices_data_clean_stand[, !sapply(housing_prices_data_clean_stand, is.factor)], do.call(cbind, dummy_vars))
+#housing_prices_data_clean_stand_onehot <- cbind(housing_prices_data_clean_stand[, !sapply(housing_prices_data_clean_stand, is.factor)], do.call(cbind, dummy_vars))
 
-save(housing_prices_data_clean_stand_onehot, file="housing_prices_data_clean_stand_onehot.Rdata")
+#save(housing_prices_data_clean_stand_onehot, file="housing_prices_data_clean_stand_onehot.Rdata")
 
+
+
+
+# one-hot encoding for ordinal factors
+options(contrasts = c("contr.treatment",  # for non-ordinal factors
+                      "contr.treatment")) # for ordinal factors
+
+### Splitting the dataset fot train and test
+
+set.seed(123456789)
+
+data_which_train <- createDataPartition(housing_prices_data_clean$totalPrice , # target variable
+                                        
+                                        p = 0.8, 
+                                        list = FALSE) 
+
+data_train <- housing_prices_data_clean[data_which_train,]
+data_test <- housing_prices_data_clean[-data_which_train,]
+
+# function for the model evaluation
+regressionMetrics <- function(data,
+                              lev = NULL,
+                              model = NULL) {
+  real <- data$obs
+  predicted <- data$pred
+  
+  # Mean Square Error
+  MSE <- mean((real - predicted)^2)
+  # Root Mean Square Error
+  RMSE <- sqrt(MSE)
+  # Mean Absolute Error
+  MAE <- mean(abs(real - predicted))
+  # Mean Absolute Percentage Error
+  MAPE <- mean(abs(real - predicted)/real)
+  # Median Absolute Error
+  MedAE <- median(abs(real - predicted))
+  # Mean Logarithmic Absolute Error
+  MSLE <- mean((log(1 + real) - log(1 + predicted))^2)
+  # Root Mean Squared Logarithmic Error (RMSLE)
+  RMSLE <- sqrt(MSLE)
+  # R2
+  R2 <- cor(predicted, real)^2
+  
+  result <- c(MSE = MSE, RMSE = RMSE, MAE = MAE, MAPE = MAPE, MedAE = MedAE,
+              MSLE = MSLE, RMSLE = RMSLE, R2 = R2)
+  return(result)
+}
+
+# 10-fold cross validation 
+ctrl_cv10 <- trainControl(method = "cv",
+                          number = 10,
+                          savePredictions = "final",
+                          summaryFunction = regressionMetrics)
+
+###Random Forest
+
+set.seed(123456789)
+data_rf <- 
+  train(totalPrice ~ ., 
+        data = data_train,
+        method = "ranger",
+        num.trees = 900,
+        num.threads = 10,
+        importance = "impurity",
+        preProcess = c("center", "scale"),
+        trControl = ctrl_cv10,
+        tuneGrid = expand.grid(mtry = 20,
+                               splitrule = "variance",
+                               min.node.size = 100))
+
+data_rf
+
+# MAPE - 0.255103
+# RMSLE - 0.159295
+
+
+tibble(
+  pred = predict(data_rf, data_test),
+  actual = data_test$totalPrice
+) %>% 
+  ggplot(aes(pred, actual)) +
+  geom_point(col = "pink") +
+  geom_smooth(method = "lm") +
+  labs(title = "Price Predictions using Random Forest", x = "Random Forest Prediction", y = "Total Price") +
+  theme_minimal()
+
+
+### eXtreme Gradient Boosting
+set.seed(123456789)
+
+data_xgboost <- 
+  train(totalPrice ~ ., 
+        data = data_train,
+        method = "xgbTree",
+        preProcess = c("center", "scale"),
+        trControl = ctrl_cv10,
+        tuneGrid = expand.grid(nrounds = 200,           
+                               max_depth = 5,          
+                               eta = 0.1,              
+                               gamma = 0.5,            
+                               colsample_bytree = 0.8,
+                               min_child_weight = 2,   
+                               subsample = 1))
+
+data_xgboost
+
+#MAPE - 0.08307353
+#RMSLE - NaN
+
+tibble(
+  pred = predict(data_xgboost, data_test),
+  actual = data_test$totalPrice
+) %>% 
+  ggplot(aes(pred, actual)) +
+  geom_point(col = "pink") +
+  geom_smooth(method = "lm") +
+  labs(title = "Price Predictions using eXtreme Gradient Boosting", x = "eXtreme Gradient Boosting Prediction", y = "Total Price") +
+  theme_minimal()
