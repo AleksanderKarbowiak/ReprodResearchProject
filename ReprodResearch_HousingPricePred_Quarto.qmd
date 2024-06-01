@@ -4,9 +4,11 @@ author: "Oksana Chubatenko, Oliwia Iwańska, Andrea Furmanek, Aleksander Karbowi
 format: html
 editor: visual
 ---
-```{r setup, include=FALSE} 
+
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
+
 ```{css}
 #| echo: false
 p {
@@ -53,7 +55,7 @@ str(housing_prices_data)
 
 ## Data cleaning
 
-In the original article, attributes describing the number of kitchens, bathrooms and drawing rooms were removed due to their ambiguity. We decided to keep them and give them a chance in further analysis. Columns such as “ID” or “URL” were removed. As in the article, we removed the variable “DOM” (“Day on market”) because as many as 49.5% of the observations contained empty values for this variable. As in the article, we decided to remove records containing any null values - the percentage of such cases was very low, so this decision did not significantly affect further work. 
+In the original article, attributes describing the number of kitchens, bathrooms and drawing rooms were removed due to their ambiguity. We decided to keep them and give them a chance in further analysis. Columns such as "ID" or "URL" were removed. As in the article, we removed the variable "DOM" ("Day on market") because as many as 49.5% of the observations contained empty values for this variable. As in the article, we decided to remove records containing any null values - the percentage of such cases was very low, so this decision did not significantly affect further work.
 
 ```{r}
   
@@ -79,7 +81,7 @@ housing_prices_data_clean <- na.omit(housing_prices_data)
 
 ## Data preprocessing
 
-In the process of preparing the data for modeling, we performed the necessary transformations of the variables. From the variable “floor” we extracted the height of the floor, getting rid of its type in contrast to the original article. The type describes the height just like a numerical value, so it doesn't make sense to keep both variables. We replaced the “Unknown” values of the Age calculated variable with the average of ConstructionTime. We also truncated categories such as “renovationCondition” to reduce the number of levels of variables with similar or nearly identical business overtones. We created new additional variables that were not created as part of the initial article - such as “avgRoomSize,” which describes the average size of usable rooms in a given apartment. We also got rid of outliers using Inter-Quartile Range (IQR). 
+In the process of preparing the data for modeling, we performed the necessary transformations of the variables. From the variable "floor" we extracted the height of the floor, getting rid of its type in contrast to the original article. The type describes the height just like a numerical value, so it doesn't make sense to keep both variables. We replaced the "Unknown" values of the Age calculated variable with the average of ConstructionTime. We also truncated categories such as "renovationCondition" to reduce the number of levels of variables with similar or nearly identical business overtones. We created new additional variables that were not created as part of the initial article - such as "avgRoomSize," which describes the average size of usable rooms in a given apartment. We also got rid of outliers using Inter-Quartile Range (IQR).
 
 ```{r}
 summary(housing_prices_data_clean)
@@ -158,7 +160,9 @@ housing_prices_data_clean$totalPrice <- housing_prices_data_clean$totalPrice * 1
 ########
 
 ```
+
 In addition to using the IQR method to detect outliers, we also analyzed the distributions of the variables.
+
 ```{r}
 
 #density of totalPrice
@@ -237,7 +241,6 @@ cut_price <- IQRcutData(housing_prices_data_clean$price)
 housing_prices_data_clean$price <- cut_price
 ```
 
-
 ## Data Analysis
 
 At the first step of data analysis process we have decided to perform correlation analysis. In the article, correlation analysis was carried out only for selected variables. We approached the issue holistically.
@@ -245,7 +248,7 @@ At the first step of data analysis process we have decided to perform correlatio
 ```{r}
 #Correlation matrix for numerics
 corrData <- housing_prices_data_clean
-drop_colsCorr2 <- c("tradeTime","Cid","Lng","Lat","floorType")
+drop_colsCorr2 <- c("tradeTime","Cid","floorType")
 drop_colsCorr <- c("Cid","Lng","Lat","tradeTime","buildingType","renovationCondition","buildingStructure","floorType","elevator","fiveYearsProperty","subway","district")
 corrData <- corrData[ , !(names(corrData) %in% drop_colsCorr)]
 
@@ -267,8 +270,7 @@ corrplot(res, method="color", col=col(200),
 
 ```
 
-Thus, we could see a strong positive correlation of variables such as “totalPrice”, “price” and “communityAverage”. The new variable “avgRoomSize” is mildly correlated with the variable “square,” but has nothing to do with the variables describing the number of rooms, which is a good sign from a modeling perspective. The variables “distance” and “communityAverage” showed a strong negative correlation.
-We also performed correlation verification on one-hot-encoded variables.
+Thus, we could see a strong positive correlation of variables such as "totalPrice", "price" and "communityAverage". The new variable "avgRoomSize" is mildly correlated with the variable "square," but has nothing to do with the variables describing the number of rooms, which is a good sign from a modeling perspective. The variables "distance" and "communityAverage" showed a strong negative correlation. We also performed correlation verification on one-hot-encoded variables.
 
 ```{r}
 #One-hot encoding - correlation matrix of all vars
@@ -292,10 +294,10 @@ ggplot(data = melt(correlation_matrix), aes(x = Var1, y = Var2, fill = value)) +
 
 ```
 
-The multitude of variables did not facilitate the analysis, but interesting conclusions were nevertheless drawn. Floor height is negatively correlated with certain types of buildings. High floors are not built in “Plate” type properties. In addition, the lack of an elevator is strongly negatively correlated with high floors. 
-
+The multitude of variables did not facilitate the analysis, but interesting conclusions were nevertheless drawn. Floor height is negatively correlated with certain types of buildings. High floors are not built in "Plate" type properties. In addition, the lack of an elevator is strongly negatively correlated with high floors.
 
 We also prepared a standardized version of the dataset for some models.
+
 ```{r}
 #restoring tradeTime
 housing_prices_data_clean_onehot$tradeTime <- housing_prices_data_clean$tradeTime
@@ -322,5 +324,42 @@ dummy_vars <- lapply(housing_prices_data_clean_stand[, sapply(housing_prices_dat
 # Combine dummy variables with numeric variables
 housing_prices_data_clean_stand_onehot <- cbind(housing_prices_data_clean_stand[, !sapply(housing_prices_data_clean_stand, is.factor)], do.call(cbind, dummy_vars))
 
+```
+
+## Geolocalization with distribution of Age/Price
+
+```{r}
+ggplot(housing_prices_data_clean,aes(x=Lat,y=Lng,group=age))+
+   geom_point(aes(color=age)) +
+    scale_colour_gradient(low="#66C2A5", high="#FC8D62")
+```
+With the plot above we have agreed outcomes from original paper that the oldest houses are settled in the city center mostly. Younger homes are in the suburbs.
+
+```{r}
+ggplot(housing_prices_data_clean,aes(x=Lat,y=Lng,group=price))+
+   geom_point(aes(color=price)) +
+    scale_colour_gradient(low="#66C2A5", high="#FC8D62")
+```
+
+Similar situation as before. The most expensive parcels can be found in the city center.
+
+```{r}
+ggplot(housing_prices_data_clean, aes(x=district, y=price, fill=district)) + 
+    geom_boxplot(alpha=0.3) +
+    theme(legend.position="none") +
+    scale_fill_brewer(palette="BuPu")
+```
+
+```{r}
+ggplot(housing_prices_data_clean, aes(x=buildingType, y=price, fill=buildingType)) + 
+    geom_boxplot(alpha=0.3) +
+    theme(legend.position="none") +
+    scale_fill_brewer(palette="BuPu")
+```
+```{r}
+ggplot(housing_prices_data_clean, aes(x=buildingType, y=square, fill=buildingType)) + 
+    geom_boxplot(alpha=0.3) +
+    theme(legend.position="none") +
+    scale_fill_brewer(palette="BuPu")
 ```
 
