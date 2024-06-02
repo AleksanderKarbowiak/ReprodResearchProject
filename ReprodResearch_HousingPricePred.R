@@ -7,6 +7,7 @@ library(corrplot)
 library(reshape2)
 library(caret)
 library(randomForest)
+library(mlr) #Stacked Generalization
 
 #set directory to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -445,3 +446,6 @@ tibble(
   geom_smooth(method = "lm") +
   labs(title = "Price Predictions using eXtreme Gradient Boosting", x = "eXtreme Gradient Boosting Prediction", y = "Total Price") +
   theme_minimal()
+
+
+#Stacked Generalization
