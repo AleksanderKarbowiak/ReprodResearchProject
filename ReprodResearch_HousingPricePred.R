@@ -8,6 +8,8 @@ library(reshape2)
 library(caret)
 library(randomForest)
 library(mlr) #Stacked Generalization
+library(lubridate) #Date Handling
+library(lightgbm)
 
 #set directory to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -119,8 +121,14 @@ housing_prices_data_clean$subway <- ifelse(housing_prices_data_clean$subway==1,"
 housing_prices_data_clean$subway <- as.factor(housing_prices_data_clean$subway)
 housing_prices_data_clean$district <- as.factor(housing_prices_data_clean$district)
 
+#Extract Features from Date
+housing_prices_data_clean$tradeYear <- year(housing_prices_data_clean$tradeTime)
+housing_prices_data_clean$tradeMonth <- month(housing_prices_data_clean$tradeTime)
+housing_prices_data_clean$tradeDay <- day(housing_prices_data_clean$tradeTime)
+housing_prices_data_clean$tradeTime <- NULL 
+
 #char to Date
-housing_prices_data_clean$tradeTime <- as.Date(housing_prices_data_clean$tradeTime)
+#housing_prices_data_clean$tradeTime <- as.Date(housing_prices_data_clean$tradeTime)
 
 table(housing_prices_data_clean$district)
 str(housing_prices_data_clean)
@@ -449,3 +457,26 @@ tibble(
 
 
 #Stacked Generalization
+
+# Replace spaces and special characters in column names
+colnames(data_train_encoded) <- gsub("[[:space:]]+", "_", colnames(data_train_encoded))  # Replace spaces with underscores
+colnames(data_train_encoded) <- gsub("[^[:alnum:]_]", "", colnames(data_train_encoded))  # Remove special characters
+
+# Convert factor variables to dummy variables (one-hot encoding)
+data_train_encoded <- model.matrix(~ . - 1, data = data_train)
+# Convert the encoded matrix to a data frame
+data_train_encoded <- as.data.frame(data_train_encoded)
+# Define task
+reg.task <- makeRegrTask(data = data_train_encoded, target = "totalPrice")
+
+# Define base learners
+base.learners <- list(
+  makeLearner("regr.randomForest", par.vals = list(ntree = 50)),
+  makeLearner("regr.xgboost")
+)
+
+# Define stacking method
+stacked.learner <- makeStackedLearner(base.learners, predict.type = "response", method = "compress")
+
+# Train stacked model
+stacked.model <- train(stacked.learner, reg.task)
