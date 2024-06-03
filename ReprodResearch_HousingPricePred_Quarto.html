@@ -454,7 +454,7 @@ renovationCondition   buildingStructure         ladderRatio            elevator
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Correlation matrix for numerics</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>corrData <span class="ot">&lt;-</span> housing_prices_data_clean</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>drop_colsCorr2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tradeTime"</span>,<span class="st">"Cid"</span>,<span class="st">"Lng"</span>,<span class="st">"Lat"</span>,<span class="st">"floorType"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>drop_colsCorr2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tradeTime"</span>,<span class="st">"Cid"</span>,<span class="st">"floorType"</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>drop_colsCorr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Cid"</span>,<span class="st">"Lng"</span>,<span class="st">"Lat"</span>,<span class="st">"tradeTime"</span>,<span class="st">"buildingType"</span>,<span class="st">"renovationCondition"</span>,<span class="st">"buildingStructure"</span>,<span class="st">"floorType"</span>,<span class="st">"elevator"</span>,<span class="st">"fiveYearsProperty"</span>,<span class="st">"subway"</span>,<span class="st">"district"</span>)</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>corrData <span class="ot">&lt;-</span> corrData[ , <span class="sc">!</span>(<span class="fu">names</span>(corrData) <span class="sc">%in%</span> drop_colsCorr)]</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -526,6 +526,56 @@ renovationCondition   buildingStructure         ladderRatio            elevator
 <span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine dummy variables with numeric variables</span></span>
 <span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_stand_onehot <span class="ot">&lt;-</span> <span class="fu">cbind</span>(housing_prices_data_clean_stand[, <span class="sc">!</span><span class="fu">sapply</span>(housing_prices_data_clean_stand, is.factor)], <span class="fu">do.call</span>(cbind, dummy_vars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="geolocalization-with-distribution-of-ageprice" class="level2">
+<h2 class="anchored" data-anchor-id="geolocalization-with-distribution-of-ageprice">Geolocalization with distribution of Age/Price</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean,<span class="fu">aes</span>(<span class="at">x=</span>Lat,<span class="at">y=</span>Lng,<span class="at">group=</span>age))<span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>age)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient</span>(<span class="at">low=</span><span class="st">"#66C2A5"</span>, <span class="at">high=</span><span class="st">"#FC8D62"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>With the plot above we have agreed outcomes from original paper that the oldest houses are settled in the city center mostly. Younger homes are in the suburbs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean,<span class="fu">aes</span>(<span class="at">x=</span>Lat,<span class="at">y=</span>Lng,<span class="at">group=</span>price))<span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>price)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient</span>(<span class="at">low=</span><span class="st">"#66C2A5"</span>, <span class="at">high=</span><span class="st">"#FC8D62"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Similar situation as before. The most expensive parcels can be found in the city center.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>district, <span class="at">y=</span>price, <span class="at">fill=</span>district)) <span class="sc">+</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the plot above we can find out that the most expensive homes on average are in districts 1, 10 and 8.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>buildingType, <span class="at">y=</span>price, <span class="at">fill=</span>buildingType)) <span class="sc">+</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>buildingType, <span class="at">y=</span>square, <span class="at">fill=</span>buildingType)) <span class="sc">+</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Type of a building does not influence the price or square meters.</p>
 </section>
 </section>
 
