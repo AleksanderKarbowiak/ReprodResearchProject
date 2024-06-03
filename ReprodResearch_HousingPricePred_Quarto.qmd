@@ -1,8 +1,14 @@
 ---
 title: "Housing Price Prediction Research Reproduction"
 author: "Oksana Chubatenko, Oliwia Iwańska, Andrea Furmanek, Aleksander Karbowiak"
-format: html
-editor: visual
+format:  
+  html:
+    theme: lumen
+    toc: true
+    toc_float: true
+title-block-banner: true
+execute:
+  echo: fenced
 ---
 
 ```{r setup, include=FALSE}
@@ -333,6 +339,7 @@ ggplot(housing_prices_data_clean,aes(x=Lat,y=Lng,group=age))+
    geom_point(aes(color=age)) +
     scale_colour_gradient(low="#66C2A5", high="#FC8D62")
 ```
+
 With the plot above we have agreed outcomes from original paper that the oldest houses are settled in the city center mostly. Younger homes are in the suburbs.
 
 ```{r}
@@ -349,17 +356,21 @@ ggplot(housing_prices_data_clean, aes(x=district, y=price, fill=district)) +
     theme(legend.position="none") +
     scale_fill_brewer(palette="BuPu")
 ```
+
 From the plot above we can find out that the most expensive homes on average are in districts 1, 10 and 8.
+
 ```{r}
 ggplot(housing_prices_data_clean, aes(x=buildingType, y=price, fill=buildingType)) + 
     geom_boxplot(alpha=0.3) +
     theme(legend.position="none") +
     scale_fill_brewer(palette="BuPu")
 ```
+
 ```{r}
 ggplot(housing_prices_data_clean, aes(x=buildingType, y=square, fill=buildingType)) + 
     geom_boxplot(alpha=0.3) +
     theme(legend.position="none") +
     scale_fill_brewer(palette="BuPu")
 ```
+
 Type of a building does not influence the price or square meters.

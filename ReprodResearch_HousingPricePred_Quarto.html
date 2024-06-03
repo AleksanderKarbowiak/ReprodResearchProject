@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,43 +48,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -101,33 +72,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Housing Price Prediction Research Reproduction</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Oksana Chubatenko, Oliwia Iwańska, Andrea Furmanek, Aleksander Karbowiak </p>
-          </div>
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Housing Price Prediction Research Reproduction</h1>
+                      </div>
   </div>
     
-    
-  </div>
   
+  <div class="quarto-title-meta">
 
-</header>
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Oksana Chubatenko, Oliwia Iwańska, Andrea Furmanek, Aleksander Karbowiak </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#housing-price-prediction-via-improved-machine-learning-techniques" id="toc-housing-price-prediction-via-improved-machine-learning-techniques" class="nav-link active" data-scroll-target="#housing-price-prediction-via-improved-machine-learning-techniques">Housing Price Prediction via Improved Machine Learning Techniques</a>
+  <ul class="collapse">
+  <li><a href="#reproduction-of-quang-truong-minh-nguyen-hy-dang-and-bo-mei-research" id="toc-reproduction-of-quang-truong-minh-nguyen-hy-dang-and-bo-mei-research" class="nav-link" data-scroll-target="#reproduction-of-quang-truong-minh-nguyen-hy-dang-and-bo-mei-research">Reproduction of Quang Truong, Minh Nguyen, Hy Dang and Bo Mei research</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data cleaning</a></li>
+  <li><a href="#data-preprocessing" id="toc-data-preprocessing" class="nav-link" data-scroll-target="#data-preprocessing">Data preprocessing</a></li>
+  <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data Analysis</a></li>
+  <li><a href="#geolocalization-with-distribution-of-ageprice" id="toc-geolocalization-with-distribution-of-ageprice" class="nav-link" data-scroll-target="#geolocalization-with-distribution-of-ageprice">Geolocalization with distribution of Age/Price</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
 
 <div class="cell">
 <style type="text/css">
@@ -144,14 +134,13 @@ p {
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<div class="cell">
-
-</div>
 <p>Read data with “gbk” encoding for Chinese signs and getting some columns insights</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#read csv as dataframe</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>housing_prices_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"new.csv"</span>,<span class="at">fileEncoding=</span><span class="st">"gbk"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)) <span class="co">#fileEncoding='gbk' is chinese signs encoding</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(housing_prices_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#read csv as dataframe</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>housing_prices_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"new.csv"</span>,<span class="at">fileEncoding=</span><span class="st">"gbk"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)) <span class="co">#fileEncoding='gbk' is chinese signs encoding</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(housing_prices_data)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   318851 obs. of  26 variables:
  $ url                : chr  "https://bj.lianjia.com/chengjiao/101084782030.html" "https://bj.lianjia.com/chengjiao/101086012217.html" "https://bj.lianjia.com/chengjiao/101086041636.html" "https://bj.lianjia.com/chengjiao/101086406841.html" ...
@@ -187,12 +176,26 @@ p {
 <h2 class="anchored" data-anchor-id="data-cleaning">Data cleaning</h2>
 <p>In the original article, attributes describing the number of kitchens, bathrooms and drawing rooms were removed due to their ambiguity. We decided to keep them and give them a chance in further analysis. Columns such as “ID” or “URL” were removed. As in the article, we removed the variable “DOM” (“Day on market”) because as many as 49.5% of the observations contained empty values for this variable. As in the article, we decided to remove records containing any null values - the percentage of such cases was very low, so this decision did not significantly affect further work.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#drop unnecessary columns</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>drop_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"url"</span>,<span class="st">"id"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>housing_prices_data <span class="ot">&lt;-</span> housing_prices_data[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data) <span class="sc">%in%</span> drop_cols)]</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># finds the count of missing values as % of the whole dataset</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(<span class="fu">is.na</span>(housing_prices_data))<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#drop unnecessary columns</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>drop_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"url"</span>,<span class="st">"id"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>housing_prices_data <span class="ot">&lt;-</span> housing_prices_data[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data) <span class="sc">%in%</span> drop_cols)]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># finds the count of missing values as % of the whole dataset</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(<span class="fu">is.na</span>(housing_prices_data))<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>housing_prices_data <span class="ot">&lt;-</span> housing_prices_data[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data) <span class="sc">%in%</span> <span class="st">"DOM"</span>)]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Now we are going to check how many rows have missing values</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>obs_with_nulls <span class="ot">&lt;-</span> housing_prices_data[<span class="sc">!</span><span class="fu">complete.cases</span>(housing_prices_data),]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Distributions of full dataset and null-rows-dataset are similar. Also there is only 2403 obs of rows with null values. </span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Then we can delete rows with NULLs.</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(housing_prices_data)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                Lng                 Lat                 Cid           tradeTime 
          0.00000000          0.00000000          0.00000000          0.00000000 
@@ -207,23 +210,88 @@ renovationCondition   buildingStructure         ladderRatio            elevator
   fiveYearsProperty              subway            district    communityAverage 
          0.01003604          0.01003604          0.00000000          0.14520889 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>housing_prices_data <span class="ot">&lt;-</span> housing_prices_data[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data) <span class="sc">%in%</span> <span class="st">"DOM"</span>)]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Now we are going to check how many rows have missing values</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>obs_with_nulls <span class="ot">&lt;-</span> housing_prices_data[<span class="sc">!</span><span class="fu">complete.cases</span>(housing_prices_data),]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Distributions of full dataset and null-rows-dataset are similar. Also there is only 2403 obs of rows with null values. </span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Then we can delete rows with NULLs.</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(housing_prices_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="data-preprocessing">Data preprocessing</h2>
 <p>In the process of preparing the data for modeling, we performed the necessary transformations of the variables. From the variable “floor” we extracted the height of the floor, getting rid of its type in contrast to the original article. The type describes the height just like a numerical value, so it doesn’t make sense to keep both variables. We replaced the “Unknown” values of the Age calculated variable with the average of ConstructionTime. We also truncated categories such as “renovationCondition” to reduce the number of levels of variables with similar or nearly identical business overtones. We created new additional variables that were not created as part of the initial article - such as “avgRoomSize,” which describes the average size of usable rooms in a given apartment. We also got rid of outliers using Inter-Quartile Range (IQR).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(housing_prices_data_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(housing_prices_data_clean)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#converting some variables to number</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>livingRoom <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>livingRoom)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>drawingRoom <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>drawingRoom)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>bathRoom <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>bathRoom)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Division of signs and numbers (floor type and height)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>floorType <span class="ot">&lt;-</span> <span class="fu">substring</span>(housing_prices_data_clean<span class="sc">$</span>floor,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>floorNum <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">substring</span>(housing_prices_data_clean<span class="sc">$</span>floor,<span class="dv">3</span>,<span class="fu">length</span>(housing_prices_data_clean<span class="sc">$</span>floor)<span class="sc">-</span><span class="dv">2</span>))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> housing_prices_data_clean[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data_clean) <span class="sc">%in%</span> <span class="st">"floor"</span>)]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Floor types translation - is like a group of floorNum then it can be removed</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 高 - High</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 未知 - Unknown</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 顶  - Top</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 低 - Low</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 底 - Bottom</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 中 - Medium</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculation of distance between home and Beijing city center (Forbidden City coordinates in our case)</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>BeijingCenterLat <span class="ot">&lt;-</span> <span class="fl">39.91690639140218</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>BeijingCenterLng <span class="ot">&lt;-</span> <span class="fl">116.39716443298232</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#Haversine distance to get result in kilometers</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>distance <span class="ot">&lt;-</span> <span class="fu">distHaversine</span>(<span class="at">p1=</span>housing_prices_data_clean[,<span class="fu">c</span>(<span class="st">"Lng"</span>,<span class="st">"Lat"</span>)],<span class="fu">c</span>(BeijingCenterLng,BeijingCenterLat))<span class="sc">/</span><span class="dv">1000</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#Age -&gt; construction time - current year</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>current_year <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">format</span>(<span class="fu">Sys.Date</span>(),<span class="st">"%Y"</span>))</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#Check frequency</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(housing_prices_data_clean<span class="sc">$</span>constructionTime)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#If unknown then use "Average" OR Maybe we should get rid off AGE/Construction Time variable</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>meanConcstrTime <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(<span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>constructionTime),<span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>constructionTime<span class="sc">==</span><span class="st">'未知'</span>,current_year<span class="sc">-</span>meanConcstrTime,current_year <span class="sc">-</span> <span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>constructionTime))</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> housing_prices_data_clean[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data_clean) <span class="sc">%in%</span> <span class="st">"constructionTime"</span>)]</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="do">##changing numeric to categories factors</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>buildingType <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingType<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Tower"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingType<span class="sc">==</span><span class="dv">2</span>,<span class="st">"Bungalow"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingType<span class="sc">==</span><span class="dv">3</span>,<span class="st">"Plate and Tower"</span>,<span class="st">"Plate"</span>)))</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co">#Bungalow building Types will be deleted from dataset since they are outliers and bungalow is completely different than other types</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> housing_prices_data_clean[housing_prices_data_clean<span class="sc">$</span>buildingType <span class="sc">!=</span> <span class="st">"Bungalow"</span>, ]</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>buildingType <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>buildingType)</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>renovationCondition <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>renovationCondition<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Other"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>renovationCondition<span class="sc">==</span><span class="dv">2</span>,<span class="st">"Rough"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>renovationCondition<span class="sc">==</span><span class="dv">3</span>,<span class="st">"Simplicity"</span>,<span class="st">"Hardcover"</span>)))</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Rough renovation condition will be assign to Hardcover</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>renovationCondition <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>renovationCondition<span class="sc">==</span><span class="st">"Rough"</span>,<span class="st">"Hardcover"</span>,housing_prices_data_clean<span class="sc">$</span>renovationCondition))</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>buildingStructure <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Unknow"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">2</span>,<span class="st">"Mixed"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">3</span>,<span class="st">"Brick and wood"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">4</span>,<span class="st">"Brick and concrete"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">5</span>,<span class="st">"Steel"</span>,<span class="st">"Steel-concrete composite"</span>)))))</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="do">##Dealing with outliers</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>buildingStructure <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="st">"Steel"</span>,<span class="st">"Steel-concrete composite"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="st">"Brick and wood"</span>,<span class="st">"Mixed"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="st">"Unknow"</span>,<span class="st">"Mixed"</span>,housing_prices_data_clean<span class="sc">$</span>buildingStructure))))</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="co">#housing_prices_data_clean$floorType &lt;- as.factor(housing_prices_data_clean$floorType)</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>elevator <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>elevator<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Elevator"</span>,<span class="st">"noElevator"</span>)</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>elevator <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>elevator)</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>fiveYearsProperty <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>fiveYearsProperty<span class="sc">==</span><span class="dv">1</span>,<span class="st">"isFiveYProp"</span>,<span class="st">"noFiveYProp"</span>)</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>fiveYearsProperty <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>fiveYearsProperty)</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>subway <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>subway<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Subway"</span>,<span class="st">"NoSubway"</span>)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>subway <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>subway)</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>district <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>district)</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="co">#char to Date</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>tradeTime <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(housing_prices_data_clean<span class="sc">$</span>tradeTime)</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="do">##New feature - average size of a room</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>avgRoomSize <span class="ot">&lt;-</span> housing_prices_data_clean<span class="sc">$</span>square<span class="sc">/</span>(housing_prices_data_clean<span class="sc">$</span>livingRoom <span class="sc">+</span> housing_prices_data_clean<span class="sc">$</span>drawingRoom <span class="sc">+</span> housing_prices_data_clean<span class="sc">$</span>kitchen <span class="sc">+</span> housing_prices_data_clean<span class="sc">$</span>bathRoom)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>totalPrice <span class="ot">&lt;-</span> housing_prices_data_clean<span class="sc">$</span>totalPrice <span class="sc">*</span> <span class="dv">10000</span> <span class="co">#real scale</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="do">#########</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="do">##INFO:</span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="do">## totalPrice is price (average price by sqrt * square) * 10 000</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="do">##Currency is yuan</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="do">########</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Lng             Lat             Cid             tradeTime        
  Min.   :116.1   Min.   :39.63   Min.   :1.111e+12   Length:316448     
@@ -266,39 +334,8 @@ renovationCondition   buildingStructure         ladderRatio            elevator
  Median :1.0000   Median : 7.000   Median : 59025  
  Mean   :0.6026   Mean   : 6.767   Mean   : 63784  
  3rd Qu.:1.0000   3rd Qu.: 8.000   3rd Qu.: 76001  
- Max.   :1.0000   Max.   :13.000   Max.   :183109  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#converting some variables to number</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>livingRoom <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>livingRoom)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>drawingRoom <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>drawingRoom)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>bathRoom <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>bathRoom)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Division of signs and numbers (floor type and height)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>floorType <span class="ot">&lt;-</span> <span class="fu">substring</span>(housing_prices_data_clean<span class="sc">$</span>floor,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>floorNum <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">substring</span>(housing_prices_data_clean<span class="sc">$</span>floor,<span class="dv">3</span>,<span class="fu">length</span>(housing_prices_data_clean<span class="sc">$</span>floor)<span class="sc">-</span><span class="dv">2</span>))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> housing_prices_data_clean[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data_clean) <span class="sc">%in%</span> <span class="st">"floor"</span>)]</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Floor types translation - is like a group of floorNum then it can be removed</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 高 - High</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 未知 - Unknown</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 顶  - Top</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 低 - Low</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 底 - Bottom</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 中 - Medium</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculation of distance between home and Beijing city center (Forbidden City coordinates in our case)</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>BeijingCenterLat <span class="ot">&lt;-</span> <span class="fl">39.91690639140218</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>BeijingCenterLng <span class="ot">&lt;-</span> <span class="fl">116.39716443298232</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#Haversine distance to get result in kilometers</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>distance <span class="ot">&lt;-</span> <span class="fu">distHaversine</span>(<span class="at">p1=</span>housing_prices_data_clean[,<span class="fu">c</span>(<span class="st">"Lng"</span>,<span class="st">"Lat"</span>)],<span class="fu">c</span>(BeijingCenterLng,BeijingCenterLat))<span class="sc">/</span><span class="dv">1000</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#Age -&gt; construction time - current year</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>current_year <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">format</span>(<span class="fu">Sys.Date</span>(),<span class="st">"%Y"</span>))</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#Check frequency</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(housing_prices_data_clean<span class="sc">$</span>constructionTime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
+ Max.   :1.0000   Max.   :13.000   Max.   :183109  
+
  1950  1952  1953  1954  1955  1956  1957  1958  1959  1960  1961  1962  1963 
    11     5    13    61    61    77    66   124    49   175     8    21    89 
  1964  1965  1966  1967  1968  1969  1970  1971  1972  1973  1974  1975  1976 
@@ -312,188 +349,158 @@ renovationCondition   buildingStructure         ladderRatio            elevator
  2016  未知 
    82 18747 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#If unknown then use "Average" OR Maybe we should get rid off AGE/Construction Time variable</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>meanConcstrTime <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(<span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>constructionTime),<span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>constructionTime<span class="sc">==</span><span class="st">'未知'</span>,current_year<span class="sc">-</span>meanConcstrTime,current_year <span class="sc">-</span> <span class="fu">as.integer</span>(housing_prices_data_clean<span class="sc">$</span>constructionTime))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> housing_prices_data_clean[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data_clean) <span class="sc">%in%</span> <span class="st">"constructionTime"</span>)]</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="do">##changing numeric to categories factors</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>buildingType <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingType<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Tower"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingType<span class="sc">==</span><span class="dv">2</span>,<span class="st">"Bungalow"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingType<span class="sc">==</span><span class="dv">3</span>,<span class="st">"Plate and Tower"</span>,<span class="st">"Plate"</span>)))</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Bungalow building Types will be deleted from dataset since they are outliers and bungalow is completely different than other types</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> housing_prices_data_clean[housing_prices_data_clean<span class="sc">$</span>buildingType <span class="sc">!=</span> <span class="st">"Bungalow"</span>, ]</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>buildingType <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>buildingType)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>renovationCondition <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>renovationCondition<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Other"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>renovationCondition<span class="sc">==</span><span class="dv">2</span>,<span class="st">"Rough"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>renovationCondition<span class="sc">==</span><span class="dv">3</span>,<span class="st">"Simplicity"</span>,<span class="st">"Hardcover"</span>)))</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Rough renovation condition will be assign to Hardcover</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>renovationCondition <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>renovationCondition<span class="sc">==</span><span class="st">"Rough"</span>,<span class="st">"Hardcover"</span>,housing_prices_data_clean<span class="sc">$</span>renovationCondition))</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>buildingStructure <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Unknow"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">2</span>,<span class="st">"Mixed"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">3</span>,<span class="st">"Brick and wood"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">4</span>,<span class="st">"Brick and concrete"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="dv">5</span>,<span class="st">"Steel"</span>,<span class="st">"Steel-concrete composite"</span>)))))</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="do">##Dealing with outliers</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>buildingStructure <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="st">"Steel"</span>,<span class="st">"Steel-concrete composite"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="st">"Brick and wood"</span>,<span class="st">"Mixed"</span>,<span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>buildingStructure<span class="sc">==</span><span class="st">"Unknow"</span>,<span class="st">"Mixed"</span>,housing_prices_data_clean<span class="sc">$</span>buildingStructure))))</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#housing_prices_data_clean$floorType &lt;- as.factor(housing_prices_data_clean$floorType)</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>elevator <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>elevator<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Elevator"</span>,<span class="st">"noElevator"</span>)</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>elevator <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>elevator)</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>fiveYearsProperty <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>fiveYearsProperty<span class="sc">==</span><span class="dv">1</span>,<span class="st">"isFiveYProp"</span>,<span class="st">"noFiveYProp"</span>)</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>fiveYearsProperty <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>fiveYearsProperty)</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>subway <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(housing_prices_data_clean<span class="sc">$</span>subway<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Subway"</span>,<span class="st">"NoSubway"</span>)</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>subway <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>subway)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>district <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(housing_prices_data_clean<span class="sc">$</span>district)</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">#char to Date</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>tradeTime <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(housing_prices_data_clean<span class="sc">$</span>tradeTime)</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="do">##New feature - average size of a room</span></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>avgRoomSize <span class="ot">&lt;-</span> housing_prices_data_clean<span class="sc">$</span>square<span class="sc">/</span>(housing_prices_data_clean<span class="sc">$</span>livingRoom <span class="sc">+</span> housing_prices_data_clean<span class="sc">$</span>drawingRoom <span class="sc">+</span> housing_prices_data_clean<span class="sc">$</span>kitchen <span class="sc">+</span> housing_prices_data_clean<span class="sc">$</span>bathRoom)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>totalPrice <span class="ot">&lt;-</span> housing_prices_data_clean<span class="sc">$</span>totalPrice <span class="sc">*</span> <span class="dv">10000</span> <span class="co">#real scale</span></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="do">#########</span></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="do">##INFO:</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="do">## totalPrice is price (average price by sqrt * square) * 10 000</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="do">##Currency is yuan</span></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="do">########</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In addition to using the IQR method to detect outliers, we also analyzed the distributions of the variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#density of totalPrice</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> totalPrice)) <span class="sc">+</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#density of totalPrice</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> totalPrice)) <span class="sc">+</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> followers)) <span class="sc">+</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> floorNum)) <span class="sc">+</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> communityAverage)) <span class="sc">+</span> </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> square)) <span class="sc">+</span> </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>               </span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> price)) <span class="sc">+</span> </span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()                   </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(housing_prices_data_clean<span class="sc">$</span>totalPrice)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co">#Looking for outliers in numerical variables using IQR</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>q<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>iqr<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>upper<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>lower<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>IQRcutData <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">lower_quantile =</span> <span class="fl">0.25</span>, <span class="at">upper_quantile =</span> <span class="fl">0.75</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  q <span class="ot">&lt;&lt;-</span> <span class="fu">quantile</span>(data, <span class="at">probs=</span><span class="fu">c</span>(lower_quantile, upper_quantile),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>  iqr <span class="ot">&lt;&lt;-</span> q[<span class="dv">2</span>]<span class="sc">-</span>q[<span class="dv">1</span>]</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  upper <span class="ot">&lt;&lt;-</span> q[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">1.5</span><span class="sc">*</span>iqr</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>  lower <span class="ot">&lt;&lt;-</span>q[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">1.5</span><span class="sc">*</span>iqr</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>  <span class="co">#outliers_totalPrice &lt;- data &gt; upper | data &lt; lower</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  data_cut <span class="ot">&lt;-</span> data</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>  data_cut[data <span class="sc">&lt;</span> lower] <span class="ot">&lt;-</span>lower</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>  data_cut[data <span class="sc">&gt;</span> upper] <span class="ot">&lt;-</span> upper</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data_cut)</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="do">########################################################## Outliers IQR</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>cut_totalPrice <span class="ot">&lt;-</span><span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>totalPrice)</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>totalPrice <span class="ot">&lt;-</span> cut_totalPrice</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>cut_followers <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>followers)</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>followers <span class="ot">&lt;-</span> cut_followers</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>cut_floorNum <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>floorNum)</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>floorNum <span class="ot">&lt;-</span> cut_floorNum</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>cut_communityAverage <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>communityAverage)</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>communityAverage <span class="ot">&lt;-</span> cut_communityAverage</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>cut_square <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>square)</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>square <span class="ot">&lt;-</span> cut_square</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>cut_price <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>price)</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>price <span class="ot">&lt;-</span> cut_price</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> followers)) <span class="sc">+</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> floorNum)) <span class="sc">+</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> communityAverage)) <span class="sc">+</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-6-4.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> square)) <span class="sc">+</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-6-5.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x =</span> price)) <span class="sc">+</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()                   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-6-6.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(housing_prices_data_clean<span class="sc">$</span>totalPrice)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-6-7.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Looking for outliers in numerical variables using IQR</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>q<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>iqr<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>upper<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>lower<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>IQRcutData <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">lower_quantile =</span> <span class="fl">0.25</span>, <span class="at">upper_quantile =</span> <span class="fl">0.75</span>)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  q <span class="ot">&lt;&lt;-</span> <span class="fu">quantile</span>(data, <span class="at">probs=</span><span class="fu">c</span>(lower_quantile, upper_quantile),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  iqr <span class="ot">&lt;&lt;-</span> q[<span class="dv">2</span>]<span class="sc">-</span>q[<span class="dv">1</span>]</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  upper <span class="ot">&lt;&lt;-</span> q[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">1.5</span><span class="sc">*</span>iqr</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  lower <span class="ot">&lt;&lt;-</span>q[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">1.5</span><span class="sc">*</span>iqr</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">#outliers_totalPrice &lt;- data &gt; upper | data &lt; lower</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  data_cut <span class="ot">&lt;-</span> data</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  data_cut[data <span class="sc">&lt;</span> lower] <span class="ot">&lt;-</span>lower</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  data_cut[data <span class="sc">&gt;</span> upper] <span class="ot">&lt;-</span> upper</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data_cut)</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="do">########################################################## Outliers IQR</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>cut_totalPrice <span class="ot">&lt;-</span><span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>totalPrice)</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>totalPrice <span class="ot">&lt;-</span> cut_totalPrice</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>cut_followers <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>followers)</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>followers <span class="ot">&lt;-</span> cut_followers</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>cut_floorNum <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>floorNum)</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>floorNum <span class="ot">&lt;-</span> cut_floorNum</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>cut_communityAverage <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>communityAverage)</span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>communityAverage <span class="ot">&lt;-</span> cut_communityAverage</span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>cut_square <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>square)</span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>square <span class="ot">&lt;-</span> cut_square</span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>cut_price <span class="ot">&lt;-</span> <span class="fu">IQRcutData</span>(housing_prices_data_clean<span class="sc">$</span>price)</span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean<span class="sc">$</span>price <span class="ot">&lt;-</span> cut_price</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
 <p>At the first step of data analysis process we have decided to perform correlation analysis. In the article, correlation analysis was carried out only for selected variables. We approached the issue holistically.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Correlation matrix for numerics</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>corrData <span class="ot">&lt;-</span> housing_prices_data_clean</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>drop_colsCorr2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tradeTime"</span>,<span class="st">"Cid"</span>,<span class="st">"floorType"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>drop_colsCorr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Cid"</span>,<span class="st">"Lng"</span>,<span class="st">"Lat"</span>,<span class="st">"tradeTime"</span>,<span class="st">"buildingType"</span>,<span class="st">"renovationCondition"</span>,<span class="st">"buildingStructure"</span>,<span class="st">"floorType"</span>,<span class="st">"elevator"</span>,<span class="st">"fiveYearsProperty"</span>,<span class="st">"subway"</span>,<span class="st">"district"</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>corrData <span class="ot">&lt;-</span> corrData[ , <span class="sc">!</span>(<span class="fu">names</span>(corrData) <span class="sc">%in%</span> drop_colsCorr)]</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">cor</span>(corrData)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#corrplot(res,method="number")</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>col <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"#BB4444"</span>, <span class="st">"#EE9988"</span>, <span class="st">"#FFFFFF"</span>, <span class="st">"#77AADD"</span>, <span class="st">"#4477AA"</span>))</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(res, <span class="at">method=</span><span class="st">"color"</span>, <span class="at">col=</span><span class="fu">col</span>(<span class="dv">200</span>),  </span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">type=</span><span class="st">"upper"</span>, <span class="at">order=</span><span class="st">"hclust"</span>, </span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>, <span class="co"># Add coefficient of correlation</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.col=</span><span class="st">"black"</span>, <span class="at">tl.srt=</span><span class="dv">45</span>, <span class="co">#Text label color and rotation</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Combine with significance</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">sig.level =</span> <span class="fl">0.01</span>, <span class="at">insig =</span> <span class="st">"blank"</span>, </span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>         <span class="co"># hide correlation coefficient on the principal diagonal</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">diag=</span><span class="cn">FALSE</span> , <span class="at">number.cex =</span> <span class="fl">0.4</span>, <span class="at">tl.cex =</span> <span class="fl">0.5</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Correlation matrix for numerics</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>corrData <span class="ot">&lt;-</span> housing_prices_data_clean</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>drop_colsCorr2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tradeTime"</span>,<span class="st">"Cid"</span>,<span class="st">"floorType"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>drop_colsCorr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Cid"</span>,<span class="st">"Lng"</span>,<span class="st">"Lat"</span>,<span class="st">"tradeTime"</span>,<span class="st">"buildingType"</span>,<span class="st">"renovationCondition"</span>,<span class="st">"buildingStructure"</span>,<span class="st">"floorType"</span>,<span class="st">"elevator"</span>,<span class="st">"fiveYearsProperty"</span>,<span class="st">"subway"</span>,<span class="st">"district"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>corrData <span class="ot">&lt;-</span> corrData[ , <span class="sc">!</span>(<span class="fu">names</span>(corrData) <span class="sc">%in%</span> drop_colsCorr)]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">cor</span>(corrData)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#corrplot(res,method="number")</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>col <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"#BB4444"</span>, <span class="st">"#EE9988"</span>, <span class="st">"#FFFFFF"</span>, <span class="st">"#77AADD"</span>, <span class="st">"#4477AA"</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(res, <span class="at">method=</span><span class="st">"color"</span>, <span class="at">col=</span><span class="fu">col</span>(<span class="dv">200</span>),  </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">type=</span><span class="st">"upper"</span>, <span class="at">order=</span><span class="st">"hclust"</span>, </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>, <span class="co"># Add coefficient of correlation</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.col=</span><span class="st">"black"</span>, <span class="at">tl.srt=</span><span class="dv">45</span>, <span class="co">#Text label color and rotation</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Combine with significance</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">sig.level =</span> <span class="fl">0.01</span>, <span class="at">insig =</span> <span class="st">"blank"</span>, </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>         <span class="co"># hide correlation coefficient on the principal diagonal</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">diag=</span><span class="cn">FALSE</span> , <span class="at">number.cex =</span> <span class="fl">0.4</span>, <span class="at">tl.cex =</span> <span class="fl">0.5</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Thus, we could see a strong positive correlation of variables such as “totalPrice”, “price” and “communityAverage”. The new variable “avgRoomSize” is mildly correlated with the variable “square,” but has nothing to do with the variables describing the number of rooms, which is a good sign from a modeling perspective. The variables “distance” and “communityAverage” showed a strong negative correlation. We also performed correlation verification on one-hot-encoded variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#One-hot encoding - correlation matrix of all vars</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> housing_prices_data_clean[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data_clean) <span class="sc">%in%</span> drop_colsCorr2)]</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert factor variables to dummy variables</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>dummy_vars <span class="ot">&lt;-</span> <span class="fu">lapply</span>(housing_prices_data_clean[, <span class="fu">sapply</span>(housing_prices_data_clean, is.factor)], <span class="cf">function</span>(x) <span class="fu">model.matrix</span>(<span class="sc">~</span> x <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> housing_prices_data_clean))</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine dummy variables with numeric variables</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_onehot <span class="ot">&lt;-</span> <span class="fu">cbind</span>(housing_prices_data_clean[, <span class="sc">!</span><span class="fu">sapply</span>(housing_prices_data_clean, is.factor)], <span class="fu">do.call</span>(cbind, dummy_vars))</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate correlation matrix</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(housing_prices_data_clean_onehot)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize correlation matrix as heatmap</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">melt</span>(correlation_matrix), <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Var2, <span class="at">fill =</span> value)) <span class="sc">+</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"blue"</span>, <span class="at">mid =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"red"</span>, <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">name=</span><span class="st">"Correlation"</span>) <span class="sc">+</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Correlation Plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#One-hot encoding - correlation matrix of all vars</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean <span class="ot">&lt;-</span> housing_prices_data_clean[ , <span class="sc">!</span>(<span class="fu">names</span>(housing_prices_data_clean) <span class="sc">%in%</span> drop_colsCorr2)]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert factor variables to dummy variables</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>dummy_vars <span class="ot">&lt;-</span> <span class="fu">lapply</span>(housing_prices_data_clean[, <span class="fu">sapply</span>(housing_prices_data_clean, is.factor)], <span class="cf">function</span>(x) <span class="fu">model.matrix</span>(<span class="sc">~</span> x <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> housing_prices_data_clean))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine dummy variables with numeric variables</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_onehot <span class="ot">&lt;-</span> <span class="fu">cbind</span>(housing_prices_data_clean[, <span class="sc">!</span><span class="fu">sapply</span>(housing_prices_data_clean, is.factor)], <span class="fu">do.call</span>(cbind, dummy_vars))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate correlation matrix</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(housing_prices_data_clean_onehot)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize correlation matrix as heatmap</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">melt</span>(correlation_matrix), <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Var2, <span class="at">fill =</span> value)) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"blue"</span>, <span class="at">mid =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"red"</span>, <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">name=</span><span class="st">"Correlation"</span>) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Correlation Plot"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -501,76 +508,88 @@ renovationCondition   buildingStructure         ladderRatio            elevator
 <p>The multitude of variables did not facilitate the analysis, but interesting conclusions were nevertheless drawn. Floor height is negatively correlated with certain types of buildings. High floors are not built in “Plate” type properties. In addition, the lack of an elevator is strongly negatively correlated with high floors.</p>
 <p>We also prepared a standardized version of the dataset for some models.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#restoring tradeTime</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_onehot<span class="sc">$</span>tradeTime <span class="ot">&lt;-</span> housing_prices_data_clean<span class="sc">$</span>tradeTime</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Data for modeling</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom function to standardize numeric and integer columns</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>standardize_cols <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(x) <span class="sc">||</span> <span class="fu">is.integer</span>(x)) {</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize numeric and integer columns</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_stand <span class="ot">&lt;-</span> housing_prices_data_clean <span class="sc">%&gt;%</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric) <span class="sc">|</span> <span class="fu">where</span>(is.integer), standardize_cols))</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#one-hot encoding once again</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert factor variables to dummy variables</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>dummy_vars <span class="ot">&lt;-</span> <span class="fu">lapply</span>(housing_prices_data_clean_stand[, <span class="fu">sapply</span>(housing_prices_data_clean_stand, is.factor)], <span class="cf">function</span>(x) <span class="fu">model.matrix</span>(<span class="sc">~</span> x <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> housing_prices_data_clean_stand))</span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine dummy variables with numeric variables</span></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_stand_onehot <span class="ot">&lt;-</span> <span class="fu">cbind</span>(housing_prices_data_clean_stand[, <span class="sc">!</span><span class="fu">sapply</span>(housing_prices_data_clean_stand, is.factor)], <span class="fu">do.call</span>(cbind, dummy_vars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#restoring tradeTime</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_onehot<span class="sc">$</span>tradeTime <span class="ot">&lt;-</span> housing_prices_data_clean<span class="sc">$</span>tradeTime</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Data for modeling</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom function to standardize numeric and integer columns</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>standardize_cols <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(x) <span class="sc">||</span> <span class="fu">is.integer</span>(x)) {</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize numeric and integer columns</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_stand <span class="ot">&lt;-</span> housing_prices_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric) <span class="sc">|</span> <span class="fu">where</span>(is.integer), standardize_cols))</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#one-hot encoding once again</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert factor variables to dummy variables</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>dummy_vars <span class="ot">&lt;-</span> <span class="fu">lapply</span>(housing_prices_data_clean_stand[, <span class="fu">sapply</span>(housing_prices_data_clean_stand, is.factor)], <span class="cf">function</span>(x) <span class="fu">model.matrix</span>(<span class="sc">~</span> x <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> housing_prices_data_clean_stand))</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine dummy variables with numeric variables</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>housing_prices_data_clean_stand_onehot <span class="ot">&lt;-</span> <span class="fu">cbind</span>(housing_prices_data_clean_stand[, <span class="sc">!</span><span class="fu">sapply</span>(housing_prices_data_clean_stand, is.factor)], <span class="fu">do.call</span>(cbind, dummy_vars))</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="geolocalization-with-distribution-of-ageprice" class="level2">
 <h2 class="anchored" data-anchor-id="geolocalization-with-distribution-of-ageprice">Geolocalization with distribution of Age/Price</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean,<span class="fu">aes</span>(<span class="at">x=</span>Lat,<span class="at">y=</span>Lng,<span class="at">group=</span>age))<span class="sc">+</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>age)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient</span>(<span class="at">low=</span><span class="st">"#66C2A5"</span>, <span class="at">high=</span><span class="st">"#FC8D62"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean,<span class="fu">aes</span>(<span class="at">x=</span>Lat,<span class="at">y=</span>Lng,<span class="at">group=</span>age))<span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>age)) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient</span>(<span class="at">low=</span><span class="st">"#66C2A5"</span>, <span class="at">high=</span><span class="st">"#FC8D62"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>With the plot above we have agreed outcomes from original paper that the oldest houses are settled in the city center mostly. Younger homes are in the suburbs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean,<span class="fu">aes</span>(<span class="at">x=</span>Lat,<span class="at">y=</span>Lng,<span class="at">group=</span>price))<span class="sc">+</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>price)) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient</span>(<span class="at">low=</span><span class="st">"#66C2A5"</span>, <span class="at">high=</span><span class="st">"#FC8D62"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean,<span class="fu">aes</span>(<span class="at">x=</span>Lat,<span class="at">y=</span>Lng,<span class="at">group=</span>price))<span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>price)) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient</span>(<span class="at">low=</span><span class="st">"#66C2A5"</span>, <span class="at">high=</span><span class="st">"#FC8D62"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Similar situation as before. The most expensive parcels can be found in the city center.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>district, <span class="at">y=</span>price, <span class="at">fill=</span>district)) <span class="sc">+</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>district, <span class="at">y=</span>price, <span class="at">fill=</span>district)) <span class="sc">+</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>From the plot above we can find out that the most expensive homes on average are in districts 1, 10 and 8.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>buildingType, <span class="at">y=</span>price, <span class="at">fill=</span>buildingType)) <span class="sc">+</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>buildingType, <span class="at">y=</span>price, <span class="at">fill=</span>buildingType)) <span class="sc">+</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>buildingType, <span class="at">y=</span>square, <span class="at">fill=</span>buildingType)) <span class="sc">+</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(housing_prices_data_clean, <span class="fu">aes</span>(<span class="at">x=</span>buildingType, <span class="at">y=</span>square, <span class="at">fill=</span>buildingType)) <span class="sc">+</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"BuPu"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ReprodResearch_HousingPricePred_Quarto_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -608,9 +627,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -622,7 +655,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -658,24 +708,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
