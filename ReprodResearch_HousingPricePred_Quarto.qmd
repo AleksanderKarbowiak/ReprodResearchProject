@@ -349,7 +349,7 @@ ggplot(housing_prices_data_clean, aes(x=district, y=price, fill=district)) +
     theme(legend.position="none") +
     scale_fill_brewer(palette="BuPu")
 ```
-
+From the plot above we can find out that the most expensive homes on average are in districts 1, 10 and 8.
 ```{r}
 ggplot(housing_prices_data_clean, aes(x=buildingType, y=price, fill=buildingType)) + 
     geom_boxplot(alpha=0.3) +
@@ -362,4 +362,4 @@ ggplot(housing_prices_data_clean, aes(x=buildingType, y=square, fill=buildingTyp
     theme(legend.position="none") +
     scale_fill_brewer(palette="BuPu")
 ```
-
+Type of a building does not influence the price or square meters.
