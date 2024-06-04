@@ -1,11 +1,18 @@
 library(tidyverse)
 library(lightgbm)
 library(Metrics)
-library(ModelMetrics)
+library(caret)
 
 # Loading data -----------------------------------------------------
 
-source("ReprodResearch_HousingPricePred.R")
+load("housing_prices_data_clean.Rdata")
+
+housing_prices_data_clean <- housing_prices_data_clean %>%
+  mutate_if(is.factor, ~ as.numeric(as.character(.)))
+
+housing_prices_data_clean %>%
+  filter(across(everything(), ~ is.na(.)))
+
 
 # Defining features and target --------------------------------------
 features <- setdiff(names(housing_prices_data_clean), "totalPrice")
@@ -14,16 +21,17 @@ target <- "totalPrice"
 
 # Splitting the data into training and testing sets -------------------------
 set.seed(717)
-train_index <- sample(seq_len(nrow(housing_prices_data_clean)), 
-                      size = 0.8 * nrow(housing_prices_data_clean))
-train_data <- housing_prices_data_clean[train_index, ]
-test_data <- housing_prices_data_clean[-train_index, ]
+trainIndex <- createDataPartition(housing_prices_data_clean$totalPrice, p = 0.85, list = FALSE)
+train_data <- housing_prices_data_clean[trainIndex, ]
+test_data <- housing_prices_data_clean[-trainIndex, ]
 
 
 # Preparing data for LightGBM ------------------------------------------------
-train_matrix <- lgb.Dataset(data = as.matrix(train_data[features]), 
-                            label = train_data[[target]])
-test_matrix <- as.matrix(test_data[features])
+trainMatrix <- lgb.Dataset(data = as.matrix(train_data[, -which(names(train_data) == "totalPrice")]), 
+                           label = train_data$totalPrice)
+testMatrix <- lgb.Dataset(data = as.matrix(test_data[, -which(names(test_data) == "totalPrice")]), 
+                          label = test_data$totalPrice)
+
 
 
 # Defining LightGBM parameters based on the article -------------------------
@@ -33,35 +41,38 @@ params <- list(
   min_child_weight = 2,
   num_leaves = 36,
   colsample_bytree = 0.8,
-  reg_lambda = 0.40
+  reg_lambda = 0.40,
+  learning_rate = 0.05,
+  feature_fraction = 0.9
 )
 
 
 # Training the LightGBM model with the specified number of estimators --------------
-model <- lgb.train(
-  params = params,
-  data = train_matrix,
-  nrounds = 64,
-  verbose = 1
-)
+model <- lgb.train(params,
+                   trainMatrix,
+                   nrounds = 1000,
+                   valids = list(test = testMatrix),
+                   early_stopping_rounds = 10)
 
 
 # Prediction -----------------------------------------------------------------
-predictions <- predict(model, test_matrix)
-
+test_predictions <- predict(model, as.matrix(test_data[, -which(names(test_data) == "totalPrice")]))
+train_predictions <- predict(model, train_matrix_data)
 
 # Evaluation metrics -------------------------------------------------------
 
-## Train data ---------------------------------------------------------------
+## RMSLE and MAPE for test data
+test_rmsle_score <- ModelMetrics::rmsle(test_data[[target]], test_predictions)
+test_mape_score <- mape(test_data[[target]], test_predictions)
 
-## Test data -----------------------------------------------------------------
-## RMSLE 
-rmsle_score <- rmsle(log1p(test_data[[target]]), log1p(predictions))
-## MAPE 
-mape_score <- mape(test_data[[target]], predictions)
+## RMSLE and MAPE for train data
+train_rmsle_score <- rmsle(train_data[[target]], train_predictions)
+train_mape_score <- mape(train_data[[target]], train_predictions)
 
-cat("RMSLE: ", rmsle_score, "\n")
-cat("MAPE: ", mape_score, "\n")
+cat("Test RMSLE: ", test_rmsle_score, "\n")
+cat("Test MAPE: ", test_mape_score, "\n")
+cat("Train RMSLE: ", train_rmsle_score, "\n")
+cat("Train MAPE: ", train_mape_score, "\n")
 
 
 # Plot --------------------------------------------------------------------
@@ -69,7 +80,7 @@ cat("MAPE: ", mape_score, "\n")
 # Create a dataframe for plotting
 plot_data <- data.frame(
   Real = test_data[[target]],
-  Predicted = predictions
+  Predicted = test_predictions
 )
 
 # Plot the data
