@@ -36,7 +36,7 @@ The purpose of the original article was to prepare a model predicting housing pr
 suppressPackageStartupMessages({
 suppressWarnings({
   
-list.of.packages <- c("dplyr", "ecce","geosphere","ggplot2","corrplot","reshape2")
+list.of.packages <- c("dplyr", "ecce","geosphere","ggplot2","corrplot","reshape2","lightgbm", "Metrics", "caret", "gridExtra")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)  
   
@@ -46,6 +46,10 @@ library(geosphere)  #for distance calculation
 library(ggplot2)
 library(corrplot)
 library(reshape2)
+library(lightgbm)
+library(Metrics)
+library(caret)
+library(gridExtra)
 })
 })  
 #set directory to source file location
@@ -389,24 +393,25 @@ We begin with data preparation for modeling such as defining the features and ta
 ```{r}
 
 # Defining features and target 
-features <- setdiff(names(housing_prices_data_clean), "totalPrice") 
-target <- "totalPrice" 
+features <- setdiff(names(housing_prices_data_clean), "totalPrice")
+target <- "totalPrice"
 
 # Splitting the data into training and testing sets 
-set.seed(717) 
+set.seed(717)
 
-trainIndex <- createDataPartition(housing_prices_data_clean$totalPrice, p = 0.85, list = FALSE) train_data <- housing_prices_data_clean[trainIndex, ] 
+trainIndex <- createDataPartition(housing_prices_data_clean$totalPrice, p = 0.85, list = FALSE)
 
+train_data <- housing_prices_data_clean[trainIndex, ]
 test_data <- housing_prices_data_clean[-trainIndex, ] 
 
 # Preparing data for LightGBM 
 trainMatrix <- lgb.Dataset(
   data = as.matrix(train_data[, -which(names(train_data) == "totalPrice")]),
-  label = train_data$totalPrice) 
+  label = train_data$totalPrice)
 
 testMatrix <- lgb.Dataset(
   data = as.matrix(test_data[, -which(names(test_data) == "totalPrice")]),
-  label = test_data$totalPrice) 
+  label = test_data$totalPrice)
 ```
 
 ### Model Parameters
@@ -429,7 +434,7 @@ params <- list(objective = "regression",
 
 We train the LightGBM model with the specified parameters.
 
-```{r}
+```{r message=FALSE, warning=FALSE, results = "hide"}
 # Training the LightGBM model  
 model <- lgb.train(params,
                    trainMatrix,
@@ -449,7 +454,8 @@ test_predictions <- predict(model, as.matrix(test_data[, -which(names(test_data)
 train_predictions <- predict(model, as.matrix(train_data[, -which(names(train_data) == "totalPrice")]))  
 
 # Excluding negative predicted values 
-test_predictions <- ifelse(test_predictions < 0, 0.01, test_predictions) train_predictions <- ifelse(train_predictions < 0, 0.01, train_predictions) 
+test_predictions <- ifelse(test_predictions < 0, 0.01, test_predictions)
+train_predictions <- ifelse(train_predictions < 0, 0.01, train_predictions) 
 ```
 
 ### Evaluation Metrics
@@ -525,6 +531,8 @@ grid.arrange(train_p, test_p, ncol = 2)
 -   Our **train RMSLE** of 0.1426 is slightly better than the article's train RMSLE of 0.1669.
 
 -   We also included MAPE as an additional metric, providing further insight into the model's accuracy. Our **test MAPE** is 0.2238, and **train MAPE** is 0.1345.
+
+-   The number of estimators in our model was 355, significantly higher than the 64 estimators used in the article. This difference indicates that our model required more trees to achieve optimal performance, which might be due to differences in data preprocessing or parameter tuning.
 
 In conclusion, our LightGBM model performs comparably to the one in the referenced article, with a slightly better fit on the training data. The inclusion of MAPE gives us a clearer picture of prediction errors, emphasizing the model's practical accuracy in terms of percentage error.
 
