@@ -121,14 +121,15 @@ housing_prices_data_clean$subway <- ifelse(housing_prices_data_clean$subway==1,"
 housing_prices_data_clean$subway <- as.factor(housing_prices_data_clean$subway)
 housing_prices_data_clean$district <- as.factor(housing_prices_data_clean$district)
 
-#Extract Features from Date
-housing_prices_data_clean$tradeYear <- year(housing_prices_data_clean$tradeTime)
-housing_prices_data_clean$tradeMonth <- month(housing_prices_data_clean$tradeTime)
-housing_prices_data_clean$tradeDay <- day(housing_prices_data_clean$tradeTime)
-housing_prices_data_clean$tradeTime <- NULL 
-
 #char to Date
-#housing_prices_data_clean$tradeTime <- as.Date(housing_prices_data_clean$tradeTime)
+housing_prices_data_clean$tradeTime <- as.Date(housing_prices_data_clean$tradeTime)
+
+#Extract Features from Date
+#housing_prices_data_clean$tradeYear <- year(housing_prices_data_clean$tradeTime)
+#housing_prices_data_clean$tradeMonth <- month(housing_prices_data_clean$tradeTime)
+#housing_prices_data_clean$tradeDay <- day(housing_prices_data_clean$tradeTime)
+#housing_prices_data_clean$tradeTime <- NULL 
+
 
 table(housing_prices_data_clean$district)
 str(housing_prices_data_clean)
