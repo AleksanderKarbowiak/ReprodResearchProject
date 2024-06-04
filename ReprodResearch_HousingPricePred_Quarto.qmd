@@ -376,6 +376,158 @@ ggplot(housing_prices_data_clean, aes(x=buildingType, y=square, fill=buildingTyp
 
 Type of a building does not influence the price or square meters.
 
+## LightGBM Model  
+
+In this section, we reproduce the results from the referenced article using the LightGBM model. LightGBM, or Light Gradient Boosting Machine, is a fast and efficient machine learning algorithm that excels at handling large datasets. It is used for both classification and regression tasks. LightGBM works by building an ensemble of decision trees in a sequential manner, where each tree is trained to correct the errors of the previous ones. Unlike other algorithms that grow trees level by level, LightGBM grows trees leaf by leaf, which often results in more accurate models. This approach is guided by gradient descent, which helps minimize errors. LightGBM is designed for speed and scalability, making it suitable for large-scale data. It includes various hyperparameters for fine-tuning, which can significantly improve its performance. This makes LightGBM a popular choice for many machine learning tasks due to its high efficiency and accuracy.
+
+The parameters used in the model are consistent with those specified in the article, ensuring comparability of results. Specifically, we optimized tree-specific parameters: `min_child_weight = 2`, `num_leaves = 36`, `colsample_bytree = 0.8`, `learning_rate = 0.15`. Additionally, we set the regularization parameter `reg_lambda = 0.40`.
+
+### Data Preparation for Modeling
+
+We begin with data preparation for modeling such as defining the features and target variable for the model and splitting the dataset into training and testing sets.
+
+```{r}
+
+# Defining features and target 
+features <- setdiff(names(housing_prices_data_clean), "totalPrice") 
+target <- "totalPrice" 
+
+# Splitting the data into training and testing sets 
+set.seed(717) 
+
+trainIndex <- createDataPartition(housing_prices_data_clean$totalPrice, p = 0.85, list = FALSE) train_data <- housing_prices_data_clean[trainIndex, ] 
+
+test_data <- housing_prices_data_clean[-trainIndex, ] 
+
+# Preparing data for LightGBM 
+trainMatrix <- lgb.Dataset(
+  data = as.matrix(train_data[, -which(names(train_data) == "totalPrice")]),
+  label = train_data$totalPrice) 
+
+testMatrix <- lgb.Dataset(
+  data = as.matrix(test_data[, -which(names(test_data) == "totalPrice")]),
+  label = test_data$totalPrice) 
+```
+
+### Model Parameters
+
+The parameters for the LightGBM model are defined based on the article.
+
+```{r}
+# Defining LightGBM parameters based on the article 
+params <- list(objective = "regression",
+               metric = "rmse",
+               min_child_weight = 2,
+               num_leaves = 36,
+               colsample_bytree = 0.8,
+               reg_lambda = 0.40,
+               learning_rate = 0.15,
+               feature_fraction = 0.9 ) 
+```
+
+### Training the Model
+
+We train the LightGBM model with the specified parameters.
+
+```{r}
+# Training the LightGBM model  
+model <- lgb.train(params,
+                   trainMatrix,
+                   nrounds = 1000,
+                   valids = list(test = testMatrix),
+                   early_stopping_rounds = 10) 
+```
+
+### Making Predictions
+
+The model's predictions are made and adjusted to handle negative values.
+
+```{r}
+# Prediction 
+test_predictions <- predict(model, as.matrix(test_data[, -which(names(test_data) == "totalPrice")])) 
+
+train_predictions <- predict(model, as.matrix(train_data[, -which(names(train_data) == "totalPrice")]))  
+
+# Excluding negative predicted values 
+test_predictions <- ifelse(test_predictions < 0, 0.01, test_predictions) train_predictions <- ifelse(train_predictions < 0, 0.01, train_predictions) 
+```
+
+### Evaluation Metrics
+
+We evaluate the model using RMSLE and MAPE metrics.
+
+```{r}
+# Evaluation metrics 
+
+# RMSLE and MAPE for test data 
+test_rmsle_score <- rmsle(test_data[[target]], test_predictions)
+test_mape_score <- mape(test_data[[target]], test_predictions)  
+
+# RMSLE and MAPE for train data 
+train_rmsle_score <- rmsle(train_data[[target]], train_predictions)
+train_mape_score <- mape(train_data[[target]], train_predictions)  
+
+cat("Test RMSLE: ", test_rmsle_score, "\n") 
+cat("Test MAPE: ", test_mape_score, "\n") 
+cat("Train RMSLE: ", train_rmsle_score, "\n") 
+cat("Train MAPE: ", train_mape_score, "\n") 
+```
+
+### Plotting Results
+
+Finally, we plot the actual vs. predicted values for both training and testing data.
+
+```{r}
+
+#  Dataframe for plotting 
+
+plot_test <- data.frame(
+  Real = test_data[[target]],
+  Predicted = test_predictions )
+
+plot_train <- data.frame(
+  Real = train_data[[target]],
+  Predicted = train_predictions)  
+
+# Plot 
+test_p <- ggplot(plot_test, aes(x = Predicted, y = Real)) +
+  geom_point(alpha = 0.6, color = "lightblue") + 
+  geom_abline(slope = 1, intercept = 0, color = "darkorange", lwd = 0.7) +  
+  labs(
+    x = "Light GBM Predictions",  
+    y = "Actual Price"  ,
+    subtitle = "Test Data"
+  ) +
+  scale_x_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +  
+  theme_minimal() +
+  theme(plot.title = element_blank()) 
+
+
+train_p <- ggplot(plot_train, aes(x = Predicted, y = Real)) +
+  geom_point(alpha = 0.6, color = "lightblue") + 
+  geom_abline(slope = 1, intercept = 0, color = "darkorange", lwd = 0.7) +  
+  labs(
+    x = "Light GBM Predictions",  
+    y = "Actual Price"  ,
+    subtitle = "Train Data"
+  ) +
+  scale_x_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +  
+  theme_minimal() +
+  theme(plot.title = element_blank()) 
+
+grid.arrange(train_p, test_p, ncol = 2)
+```
+
+-   Our **test RMSLE** of 0.1698 is very close to the article's test RMSLE of 0.1694, indicating similar performance on unseen data.
+
+-   Our **train RMSLE** of 0.1426 is slightly better than the article's train RMSLE of 0.1669.
+
+-   We also included MAPE as an additional metric, providing further insight into the model's accuracy. Our **test MAPE** is 0.2238, and **train MAPE** is 0.1345.
+
+In conclusion, our LightGBM model performs comparably to the one in the referenced article, with a slightly better fit on the training data. The inclusion of MAPE gives us a clearer picture of prediction errors, emphasizing the model's practical accuracy in terms of percentage error.
+
 ## Stacked Generalization
 
 Stacked generalization involves amalgamating the outcomes of individual estimators and employing a regressor to generate the ultimate prediction. This technique leverages the capabilities of each individual estimator by employing their outputs as inputs for a final estimator.

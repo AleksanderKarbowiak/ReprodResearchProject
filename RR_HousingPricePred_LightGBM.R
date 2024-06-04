@@ -43,7 +43,7 @@ params <- list(
   num_leaves = 36,
   colsample_bytree = 0.8,
   reg_lambda = 0.40,
-  learning_rate = 0.05,
+  learning_rate = 0.15,
   feature_fraction = 0.9
 )
 
