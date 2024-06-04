@@ -397,6 +397,6 @@ Reasons for different results: ...
 
 ```{r}
 
-regressionMetrics
+#regressionMetrics
 
 ```
