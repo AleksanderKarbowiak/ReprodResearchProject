@@ -6,6 +6,7 @@ format:
     theme: lumen
     toc: true
     toc_float: true
+    self-contained: true
 title-block-banner: true
 execute:
   echo: fenced
@@ -375,7 +376,6 @@ ggplot(housing_prices_data_clean, aes(x=buildingType, y=square, fill=buildingTyp
 
 Type of a building does not influence the price or square meters.
 
-
 ## Stacked Generalization
 
 Stacked generalization involves amalgamating the outcomes of individual estimators and employing a regressor to generate the ultimate prediction. This technique leverages the capabilities of each individual estimator by employing their outputs as inputs for a final estimator.
@@ -387,15 +387,13 @@ This study employed a prevalent 2-level stacking architecture to predict housing
 ```{r}
 ```
 
-
 ## Conclusions
 
 Obtained results: explanation, which model gave us the best results
 
 Comparison of our results with the Researcher work: ...
 
-Reasons for different results: ... 
-
+Reasons for different results: ...
 
 ```{r}
 
