@@ -476,7 +476,7 @@ tibble(
   theme_minimal()
 ```
 
-The paper's model performs better in terms of RMSLE, indicating it has lower prediction error when the logarithmic scale is used. The RMSLE of 0.12980 is indeed lower than 0.159295, suggesting that our model's predictions are slightly less accurate than those of the paper's model on the training data.
+The paper's model performs better in terms of RMSLE, indicating it has lower prediction error when the logarithmic scale is used. The RMSLE of 0.12980 is indeed lower than 0.1590321, suggesting that our model's predictions are slightly less accurate than those of the paper's model on the training data.
 
 ## eXtreme Gradient Boosting
 
