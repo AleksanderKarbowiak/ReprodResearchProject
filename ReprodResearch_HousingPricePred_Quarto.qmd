@@ -380,6 +380,148 @@ ggplot(housing_prices_data_clean, aes(x=buildingType, y=square, fill=buildingTyp
 
 Type of a building does not influence the price or square meters.
 
+## Random Forest
+
+Now we reproduce the Random Forest model. The `ranger` method is used for the Random Forest algorithm with 900 trees and 10 threads for parallel processing to enhance computation speed. The model's importance measure is set to "impurity". Pre-processing steps include centering and scaling the data to standardize it. Cross-validation with 10 folds is controlled through `ctrl_cv10`, and the tuning grid specifies parameters for the model: a maximum of 20 variables to try at each split (`mtry`), a splitting rule based on variance, and a minimum node size of 100.
+
+### Data Preparation for Modeling and setting the evaluation parametrs
+
+```{r}
+# Splitting the dataset fot train and test
+
+set.seed(123456789)
+
+data_which_train <- createDataPartition(housing_prices_data_clean$totalPrice , # target variable
+                                        
+                                        p = 0.8, 
+                                        list = FALSE) 
+
+data_train <- housing_prices_data_clean[data_which_train,]
+data_test <- housing_prices_data_clean[-data_which_train,]
+
+# function for the model evaluation
+regressionMetrics <- function(data,
+                              lev = NULL,
+                              model = NULL) {
+  real <- data$obs
+  predicted <- data$pred
+  
+  # Mean Square Error
+  MSE <- mean((real - predicted)^2)
+  # Root Mean Square Error
+  RMSE <- sqrt(MSE)
+  # Mean Absolute Error
+  MAE <- mean(abs(real - predicted))
+  # Mean Absolute Percentage Error
+  MAPE <- mean(abs(real - predicted)/real)
+  # Median Absolute Error
+  MedAE <- median(abs(real - predicted))
+  # Mean Logarithmic Absolute Error
+  MSLE <- mean((log(1 + real) - log(1 + predicted))^2)
+  # Root Mean Squared Logarithmic Error (RMSLE)
+  RMSLE <- sqrt(MSLE)
+  # R2
+  R2 <- cor(predicted, real)^2
+  
+  result <- c(MSE = MSE, RMSE = RMSE, MAE = MAE, MAPE = MAPE, MedAE = MedAE,
+              MSLE = MSLE, RMSLE = RMSLE, R2 = R2)
+  return(result)
+}
+  
+# 10-fold cross validation 
+ctrl_cv10 <- trainControl(method = "cv",
+                          number = 10,
+                          savePredictions = "final",
+                          summaryFunction = regressionMetrics)
+
+```
+
+### Model Parameters
+
+The parameters for the model are defined based on the article.
+
+```{r}
+# set.seed(123456789)
+# data_rf <- 
+#   caret::train(totalPrice ~ ., 
+#         data = data_train,
+#         method = "ranger",
+#         num.trees = 900,
+#         num.threads = 10,
+#         importance = "impurity",
+#         preProcess = c("center", "scale"),
+#         trControl = ctrl_cv10,
+#         tuneGrid = expand.grid(mtry = 20,
+#                                splitrule = "variance",
+#                                min.node.size = 100))
+
+
+# loading from saved file
+data_rf <- readRDS("data_rf_model.rds")
+data_rf
+
+```
+
+### Plotting Results
+
+```{r}
+tibble(
+  pred = predict(data_rf, data_test),
+  actual = data_test$totalPrice
+) %>% 
+  ggplot(aes(pred, actual)) +
+  geom_point(col = "lightblue") +
+  geom_smooth(method = "lm") +
+  labs(title = "Price Predictions using Random Forest", x = "Random Forest Prediction", y = "Total Price") +
+  theme_minimal()
+```
+
+The paper's model performs better in terms of RMSLE, indicating it has lower prediction error when the logarithmic scale is used. The RMSLE of 0.12980 is indeed lower than 0.159295, suggesting that our model's predictions are slightly less accurate than those of the paper's model on the training data.
+
+## eXtreme Gradient Boosting
+
+### Model Parameters
+
+The parameters for the model are defined based on the article.
+
+```{r}
+#set.seed(123456789)
+
+# data_xgboost <- 
+#   caret::train(totalPrice ~ ., 
+#         data = data_train,
+#         method = "xgbTree",
+#         preProcess = c("center", "scale"),
+#         trControl = ctrl_cv10,
+#         tuneGrid = expand.grid(nrounds = 200,           
+#                                max_depth = 5,          
+#                                eta = 0.1,              
+#                                gamma = 0.5,            
+#                                colsample_bytree = 0.8,
+#                                min_child_weight = 2,   
+#                                subsample = 1))
+
+# loading from saved file
+data_xgboost <- readRDS("data_xgboost_model.rds")
+data_xgboost
+```
+
+### Plotting Results
+
+```{r}
+tibble(
+  pred = predict(data_xgboost, data_test),
+  actual = data_test$totalPrice
+) %>% 
+  ggplot(aes(pred, actual)) +
+  geom_point(col = 'lightblue') +
+  geom_smooth(method = "lm") +
+  labs(title = "Price Predictions using eXtreme Gradient Boosting", x = "eXtreme Gradient Boosting Prediction", y = "Total Price") +
+  theme_minimal()
+```
+
+eXtreme Gradient Boosting model shows strong performance metrics with preprocessing steps of centering and scaling. The model was evaluated using 10-fold cross-validation, yielding an MSE of 8,849,962,757 and an RMSE of 93,973.28. The MAE is 54,423.7, and the MAPE is 0.0759587, indicating low percentage errors. The MedAE is 34,301.51, and the R² value of 0.9970425 suggests that the model explains over 99% of the variance in the target variable. However, MSLE and RMSLE values are missing, making it difficult to compare directly with the paper's reported RMSLE of 0.16118.
+
 ## LightGBM Model
 
 In this section, we reproduce the results from the referenced article using the LightGBM model. LightGBM, or Light Gradient Boosting Machine, is a fast and efficient machine learning algorithm that excels at handling large datasets. It is used for both classification and regression tasks. LightGBM works by building an ensemble of decision trees in a sequential manner, where each tree is trained to correct the errors of the previous ones. Unlike other algorithms that grow trees level by level, LightGBM grows trees leaf by leaf, which often results in more accurate models. This approach is guided by gradient descent, which helps minimize errors. LightGBM is designed for speed and scalability, making it suitable for large-scale data. It includes various hyperparameters for fine-tuning, which can significantly improve its performance. This makes LightGBM a popular choice for many machine learning tasks due to its high efficiency and accuracy.
