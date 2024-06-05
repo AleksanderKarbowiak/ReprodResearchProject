@@ -795,19 +795,22 @@ The fundamental concept of this method revolves around utilizing the forecasts g
 
 This study employed a prevalent 2-level stacking architecture to predict housing prices. In the initial stacking level, Random Forest and LightGBM were utilized, while XGBoost constituted the second stacking level. Additionally, to accommodate the relatively large dataset, the stacking model was subjected to 5-fold cross-validation.
 
-```{r}
-```
+Our Stacked Generalization model achieved:
+
+    Train RMSLE: 0.294
+
+    Test RMSLE: 0.304
+
+These results indicate that our model performs worse than the article’s model, both on the training and test data.
+
 
 ## Conclusions
 
-Obtained results: explanation, which model gave us the best results
+* We got the expected results, and in the case of Hybrid Regression and LightGBM even better than the authors of the article
 
-Comparison of our results with the Researcher work: ...
+* LightGBM and Hybrid Regression gave us better results than researchers'
 
-Reasons for different results: ...
+* For RF, XGBoost and Stacked Generalization we obtained worse results.
 
-```{r}
+* The training set exhibits lower error rates compared to the test set, suggesting a degree of overfitting.
 
-#regressionMetrics
-
-```
