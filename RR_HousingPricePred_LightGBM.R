@@ -21,10 +21,14 @@ target <- "totalPrice"
 
 
 # Splitting the data into training and testing sets -------------------------
-set.seed(717)
-trainIndex <- createDataPartition(housing_prices_data_clean$totalPrice, p = 0.85, list = FALSE)
-train_data <- housing_prices_data_clean[trainIndex, ]
-test_data <- housing_prices_data_clean[-trainIndex, ]
+set.seed(123456789)
+
+data_which_train <- createDataPartition(housing_prices_data_clean$totalPrice ,
+                                        p = 0.8, 
+                                        list = FALSE) 
+
+train_data <- housing_prices_data_clean[data_which_train,]
+test_data <- housing_prices_data_clean[-data_which_train,]
 
 
 # Preparing data for LightGBM ------------------------------------------------
@@ -48,7 +52,7 @@ params <- list(
 )
 
 # Training the LightGBM model with the specified number of estimators --------------
-model <- lgb.train(params,
+model_lgbm <- lgb.train(params,
                    trainMatrix,
                    nrounds = 1000,
                    valids = list(test = testMatrix),
@@ -56,8 +60,8 @@ model <- lgb.train(params,
 
 
 # Prediction -----------------------------------------------------------------
-test_predictions <- predict(model, as.matrix(test_data[, -which(names(test_data) == "totalPrice")]))
-train_predictions <- predict(model, as.matrix(train_data[, -which(names(train_data) == "totalPrice")]))
+test_predictions <- predict(model_lgbm, as.matrix(test_data[, -which(names(test_data) == "totalPrice")]))
+train_predictions <- predict(model_lgbm, as.matrix(train_data[, -which(names(train_data) == "totalPrice")]))
 
 ## Excluding negative predicted values
 test_predictions <- ifelse(test_predictions < 0, 0.01, test_predictions)
@@ -120,4 +124,4 @@ train_p <- ggplot(plot_train, aes(x = Predicted, y = Real)) +
   theme_minimal() +
   theme(plot.title = element_blank()) 
 
-grid.arrange(train_p, test_p, ncol = 2)
+#grid.arrange(train_p, test_p, ncol = 2)

@@ -380,7 +380,7 @@ ggplot(housing_prices_data_clean, aes(x=buildingType, y=square, fill=buildingTyp
 
 Type of a building does not influence the price or square meters.
 
-## LightGBM Model  
+## LightGBM Model
 
 In this section, we reproduce the results from the referenced article using the LightGBM model. LightGBM, or Light Gradient Boosting Machine, is a fast and efficient machine learning algorithm that excels at handling large datasets. It is used for both classification and regression tasks. LightGBM works by building an ensemble of decision trees in a sequential manner, where each tree is trained to correct the errors of the previous ones. Unlike other algorithms that grow trees level by level, LightGBM grows trees leaf by leaf, which often results in more accurate models. This approach is guided by gradient descent, which helps minimize errors. LightGBM is designed for speed and scalability, making it suitable for large-scale data. It includes various hyperparameters for fine-tuning, which can significantly improve its performance. This makes LightGBM a popular choice for many machine learning tasks due to its high efficiency and accuracy.
 
@@ -397,12 +397,14 @@ features <- setdiff(names(housing_prices_data_clean), "totalPrice")
 target <- "totalPrice"
 
 # Splitting the data into training and testing sets 
-set.seed(717)
+set.seed(123456789)
 
-trainIndex <- createDataPartition(housing_prices_data_clean$totalPrice, p = 0.85, list = FALSE)
+data_which_train <- createDataPartition(housing_prices_data_clean$totalPrice ,
+                                        p = 0.8, 
+                                        list = FALSE) 
 
-train_data <- housing_prices_data_clean[trainIndex, ]
-test_data <- housing_prices_data_clean[-trainIndex, ] 
+train_data <- housing_prices_data_clean[data_which_train,]
+test_data <- housing_prices_data_clean[-data_which_train,]
 
 # Preparing data for LightGBM 
 trainMatrix <- lgb.Dataset(
@@ -436,7 +438,7 @@ We train the LightGBM model with the specified parameters.
 
 ```{r message=FALSE, warning=FALSE, results = "hide"}
 # Training the LightGBM model  
-model <- lgb.train(params,
+model_lgbm <- lgb.train(params,
                    trainMatrix,
                    nrounds = 1000,
                    valids = list(test = testMatrix),
@@ -449,9 +451,9 @@ The model's predictions are made and adjusted to handle negative values.
 
 ```{r}
 # Prediction 
-test_predictions <- predict(model, as.matrix(test_data[, -which(names(test_data) == "totalPrice")])) 
+test_predictions <- predict(model_lgbm, as.matrix(test_data[, -which(names(test_data) == "totalPrice")])) 
 
-train_predictions <- predict(model, as.matrix(train_data[, -which(names(train_data) == "totalPrice")]))  
+train_predictions <- predict(model_lgbm, as.matrix(train_data[, -which(names(train_data) == "totalPrice")]))  
 
 # Excluding negative predicted values 
 test_predictions <- ifelse(test_predictions < 0, 0.01, test_predictions)
@@ -526,15 +528,122 @@ train_p <- ggplot(plot_train, aes(x = Predicted, y = Real)) +
 grid.arrange(train_p, test_p, ncol = 2)
 ```
 
--   Our **test RMSLE** of 0.1698 is very close to the article's test RMSLE of 0.1694, indicating similar performance on unseen data.
+-   Our **test RMSLE** of 0.1501 is slightly better than the article's test RMSLE of 0.1694.
 
--   Our **train RMSLE** of 0.1426 is slightly better than the article's train RMSLE of 0.1669.
+-   Our **train RMSLE** of 0.1391 is also better than the article's train RMSLE of 0.1669.
 
--   We also included MAPE as an additional metric, providing further insight into the model's accuracy. Our **test MAPE** is 0.2238, and **train MAPE** is 0.1345.
+-   We also included MAPE as an additional metric, providing further insight into the model's accuracy. Our **test MAPE** is 0.178, and **train MAPE** is 0.1164.
 
--   The number of estimators in our model was 355, significantly higher than the 64 estimators used in the article. This difference indicates that our model required more trees to achieve optimal performance, which might be due to differences in data preprocessing or parameter tuning.
+-   The number of estimators in our model was 387, significantly higher than the 64 estimators used in the article. This difference indicates that our model required more trees to achieve optimal performance, which might be due to differences in data preprocessing or parameter tuning.
 
 In conclusion, our LightGBM model performs comparably to the one in the referenced article, with a slightly better fit on the training data. The inclusion of MAPE gives us a clearer picture of prediction errors, emphasizing the model's practical accuracy in terms of percentage error.
+
+## Hybrid Regression
+
+In this section, we describe the creation and evaluation of a hybrid regression model that combines the predictions from three different machine learning models: RandomForest, XGBoost, and LightGBM. Each model contributes equally to the final prediction, enhancing the robustness and accuracy of the prediction by leveraging the strengths of each individual model.
+
+### Loading Models and Generating Predictions
+
+We begin by loading the pre-trained models for RandomForest and XGBoost and LightGBM. After loading these models, we generate predictions for the test dataset.
+
+```{r message=FALSE, warning=FALSE, results = "hide"}
+
+data_rf <- readRDS("data_rf_model.rds")
+data_xgboost <- readRDS("data_xgboost_model.rds")
+
+source("RR_HousingPricePred_LightGBM.R")
+
+load("housing_prices_data_clean.Rdata")
+set.seed(123456789)
+data_which_train <- createDataPartition(housing_prices_data_clean$totalPrice ,
+                                        p = 0.8,
+                                        list = FALSE) 
+
+data_train <- housing_prices_data_clean[data_which_train,]
+data_test <- housing_prices_data_clean[-data_which_train,]
+
+pred_rf_test <- predict(data_rf, data_test)
+pred_xgb_test <- predict(data_xgboost, data_test)
+pred_lgb_test <- predict(model_lgbm, as.matrix(data_test[, -which(names(data_test) == "totalPrice")]))
+
+pred_rf_train <- predict(data_rf, data_train)
+pred_xgb_train <- predict(data_xgboost, data_train)
+pred_lgb_train <- predict(model_lgbm, 
+                          as.matrix(data_train[, -which(names(data_train) == "totalPrice")]))
+
+```
+
+### Combining Predictions
+
+The predictions from the three models are combined using a simple average. This approach ensures that each model's prediction contributes equally to the final prediction.
+
+```{r}
+
+combined_predictions_test <- (pred_rf_test + pred_xgb_test + pred_lgb_test) / 3
+combined_predictions_train <- (pred_rf_train + pred_xgb_train + pred_lgb_train) / 3
+
+combined_predictions_test <- ifelse(combined_predictions_test < 0,
+                                    0.01, combined_predictions_test)
+combined_predictions_train <- ifelse(combined_predictions_train < 0, 
+                                     0.01, combined_predictions_train)
+
+```
+
+### Evaluating the Hybrid Model
+
+We evaluate the performance of the hybrid model using two key metrics: Root Mean Squared Logarithmic Error (RMSLE) and Mean Absolute Percentage Error (MAPE). These metrics provide a clear picture of the model's accuracy in predicting housing prices.
+
+```{r}
+combined_rmsle_test <- Metrics::rmsle(data_test$totalPrice,
+                                      combined_predictions_test)
+combined_mape_test <- Metrics::mape(data_test$totalPrice, 
+                                    combined_predictions_test)
+
+cat("Combined Test RMSLE: ", combined_rmsle_test, "\n")
+cat("Combined Test MAPE: ", combined_mape_test, "\n")
+
+combined_rmsle_train <- Metrics::rmsle(train_data$totalPrice,
+                                      combined_predictions_train)
+combined_mape_train <- Metrics::mape(train_data$totalPrice, 
+                                    combined_predictions_train)
+
+cat("Combined Train RMSLE: ", combined_rmsle_train, "\n")
+cat("Combined Train MAPE: ", combined_mape_train, "\n")
+```
+
+We compare the results of our hybrid model with those reported in the referenced article. The article reported a Train RMSLE of 0.14969 and a Test RMSLE of 0.16372.
+
+Our hybrid model achieved:
+
+-   **Train RMSLE**: 0.1371
+
+-   **Test RMSLE**: 0.1435
+
+These results indicate that our model performs better than the article's model, both on the training and test data.
+
+### Plotting the Results
+
+Finally, we visualize the performance of the hybrid model by plotting the actual vs. predicted prices. The plot includes a regression line to illustrate the relationship between predicted and actual prices.
+
+```{r}
+
+tibble(
+  pred = combined_predictions_test,
+  actual = data_test$totalPrice
+) %>% 
+  ggplot(aes(pred, actual)) +
+  geom_point(alpha = 0.6, color = "lightblue") + 
+  geom_abline(slope = 1, intercept = 0, color = "darkorange", lwd = 0.7) +  
+  labs(subtitle = "Test Data", x = "Hybrid Model Prediction", y = "Actual Price") +
+  theme_minimal() +
+  scale_x_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +  
+  theme_minimal() +
+  theme(plot.title = element_blank()) 
+
+```
+
+In summary, the hybrid regression model combines predictions from RandomForest, XGBoost, and LightGBM to improve the overall prediction accuracy. By averaging the predictions, we leverage the strengths of each model, resulting in a robust and reliable prediction system. Our hybrid model outperforms the referenced model, achieving lower RMSLE on both training and test datasets.
 
 ## Stacked Generalization
 

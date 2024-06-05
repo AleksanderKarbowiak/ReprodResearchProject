@@ -395,7 +395,7 @@ ctrl_cv10 <- trainControl(method = "cv",
 
 set.seed(123456789)
 data_rf <- 
-  train(totalPrice ~ ., 
+  caret::train(totalPrice ~ ., 
         data = data_train,
         method = "ranger",
         num.trees = 900,
@@ -408,6 +408,8 @@ data_rf <-
                                min.node.size = 100))
 
 data_rf
+
+saveRDS(data_rf, "data_rf_model.rds")
 
 # MAPE - 0.255103
 # RMSLE - 0.159295
@@ -428,7 +430,7 @@ tibble(
 set.seed(123456789)
 
 data_xgboost <- 
-  train(totalPrice ~ ., 
+  caret::train(totalPrice ~ ., 
         data = data_train,
         method = "xgbTree",
         preProcess = c("center", "scale"),
@@ -442,6 +444,8 @@ data_xgboost <-
                                subsample = 1))
 
 data_xgboost
+
+saveRDS(data_xgboost, "data_xgboost_model.rds")
 
 #MAPE - 0.08307353
 #RMSLE - NaN
