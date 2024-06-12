@@ -13,15 +13,15 @@ R Environment Information:
 R Version 4.3.2
 
 Package Versions:
-dplyr: 1.1.4
-ecce: 3.0.1
-geosphere: 1.5.18
-ggplot2: 3.4.4
-corrplot: 0.92
-reshape2: 1.4.4
-lightgbm: 4.3.0
-Metrics: 0.1.4
-caret: 6.0.94
+dplyr: 1.1.4;
+ecce: 3.0.1;
+geosphere: 1.5.18;
+ggplot2: 3.4.4;
+corrplot: 0.92;
+reshape2: 1.4.4;
+lightgbm: 4.3.0;
+Metrics: 0.1.4;
+caret: 6.0.94;
 gridExtra: 2.3
 
 *Disclaimer:
